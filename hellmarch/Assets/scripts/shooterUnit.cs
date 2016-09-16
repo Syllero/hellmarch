@@ -7,7 +7,8 @@ public class shooterUnit : unit {
 	new void Start ()
     {
         base.Start();
-	}
+        m_animator.SetBool("walk", true);
+    }
 	
 	// Update is called once per frame
 	new void  Update ()
@@ -15,8 +16,14 @@ public class shooterUnit : unit {
         base.Update();
         if (Input.anyKeyDown)
         {
-            //m_animator.SetBool("walk", true);
-            m_animator.enabled = false;
+            
+            //m_animator.enabled = false;
         }  
+    }
+
+    void OnTriggerEnter(Collider other)
+    {
+        if(other.gameObject.layer != LayerMask.NameToLayer("Ground"))
+            m_animator.enabled = false;
     }
 }

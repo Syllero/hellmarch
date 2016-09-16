@@ -14,7 +14,7 @@ public class unit : MonoBehaviour {
     {
         m_health = 10;
         m_animator = GetComponent<Animator>();
-        m_movementSpeed = 10;
+        m_movementSpeed = 3;
     }
 
     public void SetTeam(int team)
