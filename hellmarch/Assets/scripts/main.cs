@@ -10,11 +10,13 @@ public class main : MonoBehaviour {
 	void Start () {
         Debug.Log("asofpasfpoasfusa");
 
-        for(int i = 0; i < 100; i++)
+        for(int i = 0; i < 500; i++)
         {
-            GameObject shooterUnit = Instantiate(Resources.Load("shooter_unit")) as GameObject;
-            shooterUnit.transform.Translate(-50 + i, 0, 0);
-            units.Add(shooterUnit);
+            
+            GameObject su = Instantiate(Resources.Load("shooter_unit")) as GameObject;
+            su.transform.Translate(-50 + i * 5, 0, 0);
+            su.GetComponent<shooterUnit>().SetTeam(0);
+            units.Add(su);
         }
 	}
 	

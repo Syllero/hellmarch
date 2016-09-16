@@ -12,13 +12,11 @@ public class shooterUnit : unit {
 	// Update is called once per frame
 	new void  Update ()
     {
+        base.Update();
         if (Input.anyKeyDown)
         {
-            Debug.Log("ayy lmao");
-            Debug.Log(health);
-            m_animator.SetBool("walk", true);
-            //m_animator.Play("walk");
-        }
-    
+            //m_animator.SetBool("walk", true);
+            m_animator.enabled = false;
+        }  
     }
 }
