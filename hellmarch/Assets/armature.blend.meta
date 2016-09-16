@@ -1,0 +1,135 @@
+fileFormatVersion: 2
+guid: 1950af4c9fe422b46b2a5f6dbc1d6966
+timeCreated: 1474059628
+licenseType: Free
+ModelImporter:
+  serializedVersion: 19
+  fileIDToRecycleName:
+    100000: //RootNode
+    100002: Armature_002
+    100004: chest
+    100006: control
+    100008: Cube
+    100010: Cube_Man
+    100012: ElbowMarker
+    100014: head
+    100016: HeadMovementMarker
+    100018: KneeMarker
+    100020: lower_arm_L
+    100022: lower_arm_R
+    100024: lower_leg_L
+    100026: lower_leg_R
+    100028: RootMarker
+    100030: stomach
+    100032: upper_arm_L
+    100034: upper_arm_R
+    100036: upper_leg_L
+    100038: upper_leg_R
+    400000: //RootNode
+    400002: Armature_002
+    400004: chest
+    400006: control
+    400008: Cube
+    400010: Cube_Man
+    400012: ElbowMarker
+    400014: head
+    400016: HeadMovementMarker
+    400018: KneeMarker
+    400020: lower_arm_L
+    400022: lower_arm_R
+    400024: lower_leg_L
+    400026: lower_leg_R
+    400028: RootMarker
+    400030: stomach
+    400032: upper_arm_L
+    400034: upper_arm_R
+    400036: upper_leg_L
+    400038: upper_leg_R
+    2300000: ElbowMarker
+    2300002: HeadMovementMarker
+    2300004: KneeMarker
+    2300006: RootMarker
+    3300000: ElbowMarker
+    3300002: HeadMovementMarker
+    3300004: KneeMarker
+    3300006: RootMarker
+    4300000: KneeMarker
+    4300002: HeadMovementMarker
+    4300004: Cube_Man
+    4300006: Cube
+    4300008: RootMarker
+    4300010: ElbowMarker
+    7400000: Default Take
+    7400002: idle
+    7400004: Roll
+    7400006: Running
+    7400008: RunningWithWeapon
+    7400010: Walk
+    7400012: WalkWithWeapon
+    9500000: //RootNode
+    13700000: Cube
+    13700002: Cube_Man
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: control
+    hasTranslationDoF: 0
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
