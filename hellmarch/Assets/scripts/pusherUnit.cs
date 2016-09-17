@@ -31,6 +31,7 @@ public class pusherUnit : unit {
                 {
                     m_main.nuke.GetComponent<nuke>().AddPusher(m_team);
                     pushing = true;
+                    m_animator.SetBool("push", true);
                 }
             }
             else
