@@ -51,7 +51,7 @@ public class suicideUnit : unit {
 
                     if ( dist < m_explosionRange)
                     {
-                        x.GetComponent<unit>().ReceiveExplosion(m_damage, 100000, 200, transform.position);
+                        x.GetComponent<unit>().ReceiveExplosion(m_damage, 1000, 200, transform.position);
                     }
                 });
 
