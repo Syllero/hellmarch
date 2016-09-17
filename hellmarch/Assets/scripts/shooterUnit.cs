@@ -14,8 +14,10 @@ public class shooterUnit : unit {
 
     int m_damage = 2;
 
+	private AudioSource[] shooting;
 	new void Start ()
     {
+		shooting = GetComponents<AudioSource> ();
         base.Start();
         m_animator.SetBool("run", true);
 
@@ -59,6 +61,7 @@ public class shooterUnit : unit {
                 if (m_timeSinceLastShot >= m_shotInterval)
                 {
                     target.ReceiveDamage(m_damage);
+					shooting[Random.Range(0,shooting.Length)].Play ();
                     m_timeSinceLastShot = 0;
                 }
 

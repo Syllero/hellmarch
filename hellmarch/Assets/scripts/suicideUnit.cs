@@ -9,9 +9,11 @@ public class suicideUnit : unit {
     int m_explosionRange = 20;
     int m_damage = 10;
     
+	private AudioSource[] explode;
 
     // Use this for initialization
     new void Start () {
+		explode = GetComponents<AudioSource> ();
         base.Start();
         m_animator.SetBool("runBomb", true);
         m_movementSpeed = 20;
@@ -54,6 +56,8 @@ public class suicideUnit : unit {
                         x.GetComponent<unit>().ReceiveExplosion(m_damage, 1000, 200, transform.position);
                     }
                 });
+
+				explode[Random.Range(0,explode.Length)].Play ();
 
                 ReceiveDamage(m_health);
 

@@ -24,10 +24,13 @@ public class unit : MonoBehaviour {
 
     public int GetTeam() { return m_team; }
 
+	GameObject death_player;
 
 	// Use this for initialization
 	protected void Start ()
     {
+		death_player =  Instantiate(Resources.Load("Death")) as GameObject;
+
         m_health = 10;
         m_animator = GetComponent<Animator>();
         m_collider = GetComponent<Collider>();
@@ -84,6 +87,9 @@ public class unit : MonoBehaviour {
             m_animator.enabled = false;
             m_collider.enabled = false;
             m_move = false;
+
+			death_player.transform.SetParent (this.transform);
+			death_player.GetComponent<DeathSoundPlayer>().Play ();
 
             Invoke("KillMe", m_killTimer);
             return true;

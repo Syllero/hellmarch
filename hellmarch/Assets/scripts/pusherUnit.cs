@@ -5,9 +5,10 @@ public class pusherUnit : unit {
 
     int pushRange = 10;
     bool pushing = false;
-
+	private AudioSource wilhelm;
 	// Use this for initialization
 	new void Start () {
+		wilhelm = GetComponents<AudioSource> () [1];
         base.Start();
         m_animator.SetBool("runNormal", true);
         m_movementSpeed = 20;
