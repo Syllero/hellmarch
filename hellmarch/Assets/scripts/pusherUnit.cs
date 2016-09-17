@@ -39,8 +39,7 @@ public class pusherUnit : unit {
                 transform.LookAt(m_main.nuke.transform.position);
                 pushing = false;
             }
-        }
-	
+        } 
 	}
 
     public override bool ReceiveExplosion(int damage, int force, int range, Vector3 position)

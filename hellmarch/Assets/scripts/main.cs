@@ -12,12 +12,11 @@ public class main : MonoBehaviour {
     public Dictionary<int, List<GameObject>> units = new Dictionary<int, List<GameObject>>();
     public GameObject nuke;
 
-    int width = 50;
-    int height = 25;
+    public static int width = 50;
+    public static int height = 25;
 
-    int xOffset = 25;
-    int zOffset = 125;
-
+    public static int xOffset = 25;
+    public static int zOffset = 125;
 
     // Use this for initialization
     void Start () {
@@ -33,7 +32,7 @@ public class main : MonoBehaviour {
         units.Add(1, new List<GameObject>());
 
         nuke = Instantiate(Resources.Load("bomb")) as GameObject;
-        nuke.transform.position = new Vector3(xOffset - 1 * width, 0, zOffset - 4 * height);
+        nuke.transform.position = new Vector3(-52, 0, 0);
 
         for (int i = 0; i < 10; i++)
         {

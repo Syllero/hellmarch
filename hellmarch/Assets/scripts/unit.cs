@@ -78,14 +78,19 @@ public class unit : MonoBehaviour {
         Destroy(su, 10); 
 
         if (m_health <= 0)
-        {
-            m_main.units[m_team].Remove(this.gameObject);
+        { 
+            if (m_animator)
+                m_animator.enabled = false;
 
-            m_animator.enabled = false;
-            m_collider.enabled = false;
+            if (m_collider)
+                m_collider.enabled = false;
+
             m_move = false;
 
+            m_main.units[m_team].Remove(this.gameObject);
+
             Invoke("KillMe", m_killTimer);
+
             return true;
         }
         return false;
@@ -98,7 +103,10 @@ public class unit : MonoBehaviour {
 
     // Update is called once per frame
     protected void Update ()
-    {
-      
+    {   
+        if (transform.position.z > main.zOffset || transform.position.z < -main.zOffset - 10)
+        {
+            ReceiveDamage(1);
+        }
     }
 }
