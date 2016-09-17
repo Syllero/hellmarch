@@ -26,31 +26,34 @@ public class nuke : MonoBehaviour {
     }
 
     // Update is called once per frame
-    new void Update () {
+    new void Update ()
+    {
+        if (main.winningTeam < 0)
+        {
+            if (m_pushers[0] == m_pushers[1])
+            {
+                //Do nothing
+            }
+            else
+            {
+                Debug.Log("team 0: " + m_pushers[0]);
+                Debug.Log("team 1: " + m_pushers[1]);
 
-        if (m_pushers[0] == m_pushers[1])
-        {
-            //Do nothing
-        }
-        else
-        {
-            Debug.Log("team 0: " + m_pushers[0]);
-            Debug.Log("team 1: " + m_pushers[1]);
+                Vector3 direction = m_pushers[0] > m_pushers[1] ? new Vector3(0, 0, 1) : new Vector3(0, 0, -1);
+                var log = Mathf.Log(Mathf.Abs(m_pushers[0] - m_pushers[1]));
+                Debug.Log("Log: " + log);
+                actualPushSpeed = Mathf.Min(log, m_pushSpeed) * 10;
+                transform.position += direction * actualPushSpeed * Time.deltaTime;
+            }
 
-            Vector3 direction = m_pushers[0] > m_pushers[1] ? new Vector3(0, 0, 1) : new Vector3(0, 0, -1);
-            var log = Mathf.Log(Mathf.Abs(m_pushers[0] - m_pushers[1]));
-            Debug.Log("Log: " + log);
-            actualPushSpeed = Mathf.Min(log, m_pushSpeed);
-            transform.position += direction * actualPushSpeed * Time.deltaTime;
-        }
-
-        if (transform.position.z > main.zOffset)
-        {
-            main.winningTeam = 0;
-        }
-        else if (transform.position.z < -main.zOffset - 10)
-        {
-            main.winningTeam = 1;
-        }
+            if (transform.position.z > main.zOffset)
+            {
+                main.winningTeam = 0;
+            }
+            else if (transform.position.z < -main.zOffset - 10)
+            {
+                main.winningTeam = 1;
+            }
+        }  
     }
 }

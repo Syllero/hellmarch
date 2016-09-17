@@ -20,6 +20,9 @@ public class main : MonoBehaviour {
     public static int zOffset = 125;
 
     public static int winningTeam = -1;
+    bool didReset = false;
+
+    private Vector3 victoryPosition = Vector3.zero;
 
     private Dictionary<int, List<string>> victoryEffects = new Dictionary<int, List<string>>();
 
@@ -87,17 +90,19 @@ public class main : MonoBehaviour {
 	// Update is called once per frame
 	void Update ()
     {
-
-        for (int i = 0; i < players.Count; i++)
+        if (winningTeam == -1)
         {
-            players[i].Update();
+            for (int i = 0; i < players.Count; i++)
+            {
+                players[i].Update();
+            }
         }
 
         LocalControls();
 
         if (main.winningTeam > -1)
         {
-            for(int i = 0; i < 10; i++)
+            for(int i = 0; i < 20; i++)
             {
                 if (Random.Range(0, 10) == 0)
                 {
@@ -114,8 +119,61 @@ public class main : MonoBehaviour {
                     Destroy(su, 3);
                 } 
             }
+
+            if (!didReset)
+                Invoke("ResetGame", 10);
         }
 
+    }
+
+    public void ResetGame()
+    { 
+        foreach(var kvp in units)
+        {
+            kvp.Value.ForEach(x =>
+            {
+                Destroy(x);
+            });
+
+            kvp.Value.Clear();
+        }
+
+        
+        Destroy(nuke);
+
+        nuke = Instantiate(Resources.Load("bomb")) as GameObject;
+        nuke.transform.position = new Vector3(-52, 0, 0);
+        
+        winningTeam = -1;
+        didReset = false;
+
+        TEAM_ASSIGNER = 0;
+
+        List<int> playerIDs = new List<int>();
+        players.ForEach(x =>
+        {
+            playerIDs.Add(x.AirConsoleId);
+        });
+
+        players.Clear();
+
+        for (int i = 0; i < playerIDs.Count; i++)
+        {
+            int temp = playerIDs[i];
+            int randomIndex = Random.Range(i, playerIDs.Count);
+            playerIDs[i] = playerIDs[randomIndex];
+            playerIDs[randomIndex] = temp;
+        }
+        int index = 0;
+        playerIDs.ForEach(x =>
+        {
+            players.Add(new PlayerInstance(x, TEAM_ASSIGNER++ % 2));
+        });
+
+        players.ForEach(x =>
+        {
+            x.SyncToPlayer();
+        });
     }
 
     private void LocalControls()
