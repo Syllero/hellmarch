@@ -16,7 +16,7 @@
    version="1.1"
    inkscape:version="0.91 r13725"
    sodipodi:docname="background.svg"
-   inkscape:export-filename="C:\Users\Max\dev\hellmarch\background.png"
+   inkscape:export-filename="C:\Users\Max\dev\hellmarch\hellmarch\Assets\background.png"
    inkscape:export-xdpi="90"
    inkscape:export-ydpi="90"
    enable-background="new">
@@ -41,8 +41,8 @@
      inkscape:pageopacity="1"
      inkscape:pageshadow="2"
      inkscape:zoom="0.35"
-     inkscape:cx="661.89807"
-     inkscape:cy="673.25193"
+     inkscape:cx="877.08479"
+     inkscape:cy="216.33603"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="true"
@@ -87,12 +87,6 @@
      id="layer1"
      transform="translate(-24.923534,36.298577)"
      style="filter:url(#filter4485);opacity:0.98">
-    <path
-       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       d="m 117.89847,785.02077 104.24367,0"
-       id="path4162"
-       inkscape:connector-curvature="0"
-       sodipodi:nodetypes="cc" />
     <text
        xml:space="preserve"
        style="font-style:normal;font-variant:normal;font-weight:500;font-stretch:normal;font-size:125px;line-height:125%;font-family:ArmyStamp;-inkscape-font-specification:'ArmyStamp Medium';letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
@@ -131,12 +125,6 @@
        d="m 178.64478,423.50262 0,539.24566"
        id="path4218"
        inkscape:connector-curvature="0" />
-    <path
-       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       d="m 116.89847,604.02077 104.24367,0"
-       id="path4162-1"
-       inkscape:connector-curvature="0"
-       sodipodi:nodetypes="cc" />
     <text
        xml:space="preserve"
        style="font-style:normal;font-variant:normal;font-weight:500;font-stretch:normal;font-size:125px;line-height:125%;font-family:ArmyStamp;-inkscape-font-specification:'ArmyStamp Medium';letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
@@ -214,12 +202,6 @@
        d="m 987.94924,969.41569 0,-554.28569"
        id="path4233"
        inkscape:connector-curvature="0" />
-    <path
-       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       d="m 1756.7556,787.02079 104.2437,0"
-       id="path4162-2"
-       inkscape:connector-curvature="0"
-       sodipodi:nodetypes="cc" />
     <text
        xml:space="preserve"
        style="font-style:normal;font-variant:normal;font-weight:500;font-stretch:normal;font-size:125px;line-height:125%;font-family:ArmyStamp;-inkscape-font-specification:'ArmyStamp Medium';letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
@@ -231,12 +213,6 @@
          id="tspan4174-9"
          x="1814.593"
          y="534.03094">A</tspan></text>
-    <path
-       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       d="m 1755.7556,604.02077 104.2437,0"
-       id="path4162-1-38"
-       inkscape:connector-curvature="0"
-       sodipodi:nodetypes="cc" />
     <text
        xml:space="preserve"
        style="font-style:normal;font-variant:normal;font-weight:500;font-stretch:normal;font-size:125px;line-height:125%;font-family:ArmyStamp;-inkscape-font-specification:'ArmyStamp Medium';letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
@@ -442,5 +418,25 @@
          y="710.55328"
          style="font-style:normal;font-variant:normal;font-weight:500;font-stretch:normal;font-size:125px;font-family:ArmyStamp;-inkscape-font-specification:'ArmyStamp Medium'"
          id="tspan4296-1-8-1-0-6-3-2" /></text>
+    <path
+       style="opacity:0.98000004;fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:3.87543488;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1;filter:url(#filter4485)"
+       d="m 1960.4263,420.9644 -1620.71086,0"
+       id="path4231-3"
+       inkscape:connector-curvature="0" />
+    <path
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:5;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;stroke-miterlimit:4;stroke-dasharray:none"
+       d="m 179.1,964.06212 1620,0"
+       id="path4540"
+       inkscape:connector-curvature="0" />
+    <path
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m 89.100004,604.06216 1799.999996,0"
+       id="path4542"
+       inkscape:connector-curvature="0" />
+    <path
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m 1889.1,784.06216 -1799.999996,0"
+       id="path4544"
+       inkscape:connector-curvature="0" />
   </g>
 </svg>
