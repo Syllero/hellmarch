@@ -13,9 +13,9 @@ namespace AssemblyCSharp
         static readonly float SYNC_INTERVAL = 0.5f;
 
         static readonly Dictionary<String, UnitInfo> UNIT_INFO = new Dictionary<string, UnitInfo> {
-            { "soldier", new UnitInfo(3.0f, 600, "dude")},
-            { "bomber", new UnitInfo(5.0f, 1000, "suicideDude")},
-            { "pusher", new UnitInfo(1.5f, 200, "pusher")},
+            { "soldier", new UnitInfo(3.0f, 700, "dude")},
+            { "bomber", new UnitInfo(5.0f, 1200, "suicideDude")},
+            { "pusher", new UnitInfo(1.5f, 250, "pusher")},
         };
 
         static readonly Dictionary<int, TeamInfo> TEAM_INFO = new Dictionary<int, TeamInfo> {
@@ -29,7 +29,7 @@ namespace AssemblyCSharp
 		String nickname;
 		String user_profile_url;
         int money = 0;
-        Dictionary<String, DateTime> cooldowns = new Dictionary<string, DateTime>();
+        Dictionary<String, int> build_queue = new Dictionary<String, int>();
         List<KeyValuePair<DateTime, String>> build_list = new List<KeyValuePair<DateTime, String>>();
         List<String> garrison_list = new List<String>();
 
@@ -60,23 +60,32 @@ namespace AssemblyCSharp
 			this.last_sync = currentTime;
 		    }
 		    this.FinishBuilds();
-		    this.ClearCooldowns();
+		    this.ProcessQueue();
 		}
 
         public void SyncToPlayer()
         {
-            JObject data = new JObject();
-		    data["action"] = "update";
-		    data["money"] = this.money;
-		    data["garrison"] = this.garrison_list.Count;
-		    AirConsole.instance.Message (this.air_console_id, data);
+            JObject root = new JObject();
+            JObject queue_info = new JObject();
+            root["action"] = "update";
+            root["money"] = this.money;
+            root["garrison"] = this.garrison_list.Count;
+            foreach (KeyValuePair<String, int> queue in this.build_queue)
+            {
+                if(queue.Value > 0)
+                {
+                    queue_info[queue.Key] = queue.Value;
+                }
+            }
+            root["queue"] = queue_info;
+            AirConsole.instance.Message (this.air_console_id, root);
 		}
 
         public void FinishBuilds()
         {
-            for(int i=this.build_list.Count-1; i>=0; i--)
+            for (int i = this.build_list.Count - 1; i >= 0; i--)
             {
-                if(this.build_list[i].Key < DateTime.Now)
+                if (this.build_list[i].Key < DateTime.Now)
                 {
                     this.garrison_list.Add(this.build_list[i].Value);
                     this.build_list.RemoveAt(i);
@@ -84,17 +93,37 @@ namespace AssemblyCSharp
             }
         }
 
-        public void ClearCooldowns()
+        public void ProcessQueue()
         {
-            foreach(KeyValuePair<String, DateTime> cooldown in this.cooldowns)
+            Dictionary<String, int> new_build_queue = new Dictionary<String, int>(this.build_queue);
+            foreach(KeyValuePair<String, int> queue in this.build_queue)
             {
-                if(cooldown.Value < DateTime.Now)
+                if(queue.Value < 1)
                 {
-                    cooldowns.Remove(cooldown.Key);
-                    this.ClearCooldowns();
-                    break;
+                    continue;
+                }
+                Boolean found = false;
+                foreach(KeyValuePair<DateTime, String> item in this.build_list)
+                {
+                    if(item.Value == queue.Key)
+                    {
+                        found = true;
+                        break;
+                    }
+                }
+                if(!found)
+                {
+                    DateTime completionDateTime = DateTime.Now.AddSeconds(UNIT_INFO[queue.Key].build_time);
+                    this.build_list.Add(new KeyValuePair<DateTime, String>(completionDateTime, queue.Key));
+                    new_build_queue[queue.Key] = queue.Value - 1;
+                    JObject data = new JObject();
+                    data["action"] = "build";
+                    data["type"] = queue.Key;
+                    data["time"] = UNIT_INFO[queue.Key].build_time * 1000;
+                    AirConsole.instance.Message(this.air_console_id, data);
                 }
             }
+            this.build_queue = new_build_queue;
         }
 
         public void ReceieveData(JToken data)
@@ -103,18 +132,22 @@ namespace AssemblyCSharp
             if ("build" == action)
             {
                 String type = (String)data["type"];
-                if (this.cooldowns.ContainsKey(type))
-                {
-                    this.SendError("Already in construction!");
-                }
-                else if(this.money < UNIT_INFO[type].cost)
+                
+                if(this.money < UNIT_INFO[type].cost)
                 {
                     this.SendError("Insufficient funds!");
-                } else { 
-                    DateTime completionDateTime = DateTime.Now.AddSeconds(UNIT_INFO[type].build_time);
-                    this.build_list.Add(new KeyValuePair<DateTime, String>(completionDateTime, type));
-                    this.cooldowns.Add(type, completionDateTime);
+                }
+                else
+                {
                     this.money -= UNIT_INFO[type].cost;
+                    if (this.build_queue.ContainsKey(type))
+                    {
+                        this.build_queue[type] += 1;
+                    }
+                    else
+                    {
+                        this.build_queue.Add(type, 1);
+                    }
                 }
             }
             else if("deploy" == action)
