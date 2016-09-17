@@ -10,11 +10,11 @@ public class main : MonoBehaviour {
 	List<PlayerInstance> players;
 
     public Dictionary<int, List<GameObject>> units = new Dictionary<int, List<GameObject>>();
+    public GameObject nuke;
+    // Use this for initialization
+    void Start () {
+		players = new List<PlayerInstance> (); 
 
-	// Use this for initialization
-	void Start () {
-		players = new List<PlayerInstance> ();
-        Debug.Log("asofpasfpoasfusa");
         AirConsole.instance.onMessage += OnMessage;
         AirConsole.instance.onConnect += OnConnect;
 
@@ -23,6 +23,9 @@ public class main : MonoBehaviour {
 
         units.Add(0, new List<GameObject>());
         units.Add(1, new List<GameObject>());
+
+        nuke = Instantiate(Resources.Load("bomb")) as GameObject;
+        nuke.transform.position = Vector3.zero;
 
         for (int i = 0; i < 10; i++)
         {
@@ -35,6 +38,11 @@ public class main : MonoBehaviour {
             suicider.transform.Translate(-50 + i * 10, 0, -120);
             suicider.GetComponent<suicideUnit>().Initialize(new Vector3(0, 0, 1), 0, this);
             units[0].Add(suicider);
+
+            GameObject pusher = Instantiate(Resources.Load("pusher")) as GameObject;
+            pusher.transform.Translate(-50 + i * 10, 0, -130);
+            pusher.GetComponent<pusherUnit>().Initialize(new Vector3(0, 0, 1), 0, this);
+            units[0].Add(pusher);
         }
 
         for (int i = 0; i < 10; i++)
@@ -48,6 +56,11 @@ public class main : MonoBehaviour {
             suicider.transform.Translate(-50 + i * 10, 0, 120);
             suicider.GetComponent<suicideUnit>().Initialize(new Vector3(0, 0, -1), 1, this);
             units[1].Add(suicider);
+
+            GameObject pusher = Instantiate(Resources.Load("pusher")) as GameObject;
+            pusher.transform.Translate(-50 + i * 10, 0, 130);
+            pusher.GetComponent<pusherUnit>().Initialize(new Vector3(0, 0, -1), 1, this);
+            units[1].Add(pusher);
         }
     }
 

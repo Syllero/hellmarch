@@ -64,7 +64,7 @@ public class unit : MonoBehaviour {
         return false;
     }
 
-    public bool ReceiveDamage(int damage)
+    public virtual bool ReceiveDamage(int damage)
     {
         m_health -= damage;
 
