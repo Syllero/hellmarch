@@ -6,13 +6,13 @@ public class shooterUnit : unit {
 
     // Use this for initialization
 
-    int m_targetRange = 30;
-    int m_shootRange = 15;
+    int m_targetRange = 80;
+    int m_shootRange = 60;
 
-    int m_shotInterval = 1;
+    int m_shotInterval = 2;
     float m_timeSinceLastShot;
 
-    int m_damage = 2;
+    int m_damage = 1;
 
 	private AudioSource[] shooting;
 	new void Start ()

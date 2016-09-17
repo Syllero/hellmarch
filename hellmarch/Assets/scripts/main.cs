@@ -7,17 +7,21 @@ using AssemblyCSharp;
 
 public class main : MonoBehaviour {
 
+    private static int TEAM_ASSIGNER = 0;
 	List<PlayerInstance> players;
 
     public Dictionary<int, List<GameObject>> units = new Dictionary<int, List<GameObject>>();
     public GameObject nuke;
 
-    int width = 50;
-    int height = 25;
+    public static int width = 50;
+    public static int height = 25;
 
-    int xOffset = 25;
-    int zOffset = 125;
+    public static int xOffset = 25;
+    public static int zOffset = 125;
 
+    public static int winningTeam = -1;
+
+    private Dictionary<int, List<string>> victoryEffects = new Dictionary<int, List<string>>();
 
     // Use this for initialization
     void Start () {
@@ -29,11 +33,21 @@ public class main : MonoBehaviour {
         Physics.IgnoreLayerCollision(LayerMask.NameToLayer("RedTeam"), LayerMask.NameToLayer("Ignore"));
         Physics.IgnoreLayerCollision(LayerMask.NameToLayer("BlueTeam"), LayerMask.NameToLayer("Ignore"));
 
+        victoryEffects.Add(0, new List<string>());
+        victoryEffects.Add(1, new List<string>());
+
+        victoryEffects[0].Add("FX_Fireworks_Blue_Large");
+        victoryEffects[0].Add("FX_Fireworks_Blue_Small");
+
+        victoryEffects[1].Add("FX_Fireworks_Yellow_Large");
+        victoryEffects[1].Add("FX_Fireworks_Yelow_Small");
+
+
         units.Add(0, new List<GameObject>());
         units.Add(1, new List<GameObject>());
 
         nuke = Instantiate(Resources.Load("bomb")) as GameObject;
-        nuke.transform.position = new Vector3(xOffset - 1 * width, 0, zOffset - 4 * height);
+        nuke.transform.position = new Vector3(-52, 0, 0);
 
         for (int i = 0; i < 10; i++)
         {
@@ -71,56 +85,116 @@ public class main : MonoBehaviour {
     }
 	
 	// Update is called once per frame
-	void Update () {
-		for (int i = 0; i < players.Count; i++) {
-			players [i].Update ();
-		}
+	void Update ()
+    {
 
-        if(Input.GetKeyDown(KeyCode.Keypad9))
+        for (int i = 0; i < players.Count; i++)
         {
-            SpawnUnit("dude", 0, 2, 8);
-            SpawnUnit("suicideDude", 0, 2, 8);
-            SpawnUnit("pusher", 0, 2, 8);
+            players[i].Update();
         }
 
-        if(Input.GetKeyDown(KeyCode.Keypad6))
+        LocalControls();
+
+        if (main.winningTeam > -1)
         {
-            SpawnUnit("dude", 0, 1, 8);
-            SpawnUnit("suicideDude", 0, 1, 8);
-            SpawnUnit("pusher", 0, 1, 8);
+            for(int i = 0; i < 20; i++)
+            {
+                if (Random.Range(0, 10) == 0)
+                {
+                    int effect = Random.Range(0, 1);
+
+                    GameObject ps = Instantiate(Resources.Load("SimpleFX/Prefabs/" + victoryEffects[winningTeam][effect])) as GameObject;
+                    ps.transform.position = new Vector3(Random.Range(-100, 100), 5, Random.Range(-250, 250));
+
+                    Destroy(ps, 3);
+                } 
+            }
         }
 
+    }
 
-        if(Input.GetKeyDown(KeyCode.Keypad3))
-        {
-            SpawnUnit("dude", 0, 0, 8);
-            SpawnUnit("suicideDude", 0, 0, 8);
-            SpawnUnit("pusher", 0, 0, 8);
-        }
-
+    private void LocalControls()
+    {
         if (Input.GetKeyDown(KeyCode.Keypad7))
         {
-            SpawnUnit("dude", 1, 2, 0);
-            SpawnUnit("suicideDude", 1, 2, 0);
-            SpawnUnit("pusher", 1, 2, 0);
+            SpawnUnit("dude", 0, 0, 8);
+        }
+        if (Input.GetKeyDown(KeyCode.Keypad8))
+        {
+            SpawnUnit("suicideDude", 0, 0, 8);
+        }
+        if (Input.GetKeyDown(KeyCode.Keypad9))
+        {
+            SpawnUnit("pusher", 0, 0, 8);
         }
 
         if (Input.GetKeyDown(KeyCode.Keypad4))
         {
-            SpawnUnit("dude", 1, 1, 0);
-            SpawnUnit("suicideDude", 1, 1, 0);
-            SpawnUnit("pusher", 1, 1, 0);
+            SpawnUnit("dude", 0, 1, 8);
         }
-
+        if (Input.GetKeyDown(KeyCode.Keypad5))
+        {
+            SpawnUnit("suicideDude", 0, 1, 8);
+        }
+        if (Input.GetKeyDown(KeyCode.Keypad6))
+        {
+            SpawnUnit("pusher", 0, 1, 8);
+        }
 
         if (Input.GetKeyDown(KeyCode.Keypad1))
         {
-            SpawnUnit("dude", 1, 0, 0);
-            SpawnUnit("suicideDude", 1, 0, 0);
-            SpawnUnit("pusher", 1, 0, 0);
+            SpawnUnit("dude", 0, 2, 8);
+        }
+        if (Input.GetKeyDown(KeyCode.Keypad2))
+        {
+            SpawnUnit("suicideDude", 0, 2, 8);
+        }
+        if (Input.GetKeyDown(KeyCode.Keypad3))
+        {
+            SpawnUnit("pusher", 0, 2, 8);
         }
 
 
+
+
+        if (Input.GetKeyDown(KeyCode.Q))
+        {
+            SpawnUnit("dude", 1, 0, 0);
+        }
+        if (Input.GetKeyDown(KeyCode.W))
+        {
+            SpawnUnit("suicideDude", 1, 0, 0);
+        }
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            SpawnUnit("pusher", 1, 0, 0);
+        }
+
+        if (Input.GetKeyDown(KeyCode.A))
+        {
+            SpawnUnit("dude", 1, 1, 0);
+        }
+        if (Input.GetKeyDown(KeyCode.S))
+        {
+            SpawnUnit("suicideDude", 1, 1, 0);
+        }
+        if (Input.GetKeyDown(KeyCode.D))
+        {
+            SpawnUnit("pusher", 1, 1, 0);
+        }
+
+        if (Input.GetKeyDown(KeyCode.Z))
+        {
+            SpawnUnit("dude", 1, 2, 0);
+        }
+        if (Input.GetKeyDown(KeyCode.X))
+        {
+            SpawnUnit("suicideDude", 1, 2, 0);
+        }
+        if (Input.GetKeyDown(KeyCode.C))
+        {
+            SpawnUnit("pusher", 1, 2, 0);
+        }
     }
 
     void OnMessage(int from, JToken data) {
@@ -134,7 +208,7 @@ public class main : MonoBehaviour {
 
     void OnConnect(int device_id) {
 		Debug.Log ("User connected" + device_id);
-		players.Add (new PlayerInstance (device_id));
+		players.Add (new PlayerInstance (device_id, TEAM_ASSIGNER++ % 2));
     }
 
 	void OnDisconnect( int device_id ) {

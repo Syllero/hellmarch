@@ -40,13 +40,12 @@ public class pusherUnit : unit {
                 transform.LookAt(m_main.nuke.transform.position);
                 pushing = false;
             }
-        }
-	
+        } 
 	}
 
     public override bool ReceiveExplosion(int damage, int force, int range, Vector3 position)
     {
-        if(ReceiveDamage(damage) && pushing)
+        if(ReceiveDamage(damage))
         {
             return base.ReceiveExplosion(damage, force, range, position);
         }
@@ -56,10 +55,14 @@ public class pusherUnit : unit {
 
     public override bool ReceiveDamage(int damage)
     {
-        if(base.ReceiveDamage(damage) && pushing)
+        if(base.ReceiveDamage(damage))
         {
-            m_main.nuke.GetComponent<nuke>().RemovePusher(m_team);
-            pushing = false;
+            if (pushing)
+            {
+                m_main.nuke.GetComponent<nuke>().RemovePusher(m_team);
+                pushing = false;
+            }
+
             return true;
         }
 
