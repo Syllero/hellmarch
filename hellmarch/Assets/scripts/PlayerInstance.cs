@@ -10,9 +10,20 @@ namespace AssemblyCSharp
 {
 	public class PlayerInstance
 	{
-		int air_console_id;
+        static readonly float SYNC_INTERVAL = 0.5f;
+        static readonly Dictionary<String, UnitInfo> UNIT_INFO = new Dictionary<string, UnitInfo> {
+            { "soldier", new UnitInfo(5.0f, 10)},
+            { "bomber", new UnitInfo(7.5f, 15)},
+        };
+       
+        int air_console_id;
+        float last_sync = 0;
 		String nickname;
 		String user_profile_url;
+        int money = 0;
+        Dictionary<String, DateTime> cooldowns = new Dictionary<string, DateTime>();
+        List<KeyValuePair<DateTime, String>> build_list = new List<KeyValuePair<DateTime, String>>();
+        List<String> garrison_list = new List<String>();
 
 		public int AirConsoleId
 		{
@@ -29,21 +40,87 @@ namespace AssemblyCSharp
 		public void Update()
 		{
 			float delta = Time.deltaTime;
-			SyncToPlayer();
+            float currentTime = Time.realtimeSinceStartup;
+            if(currentTime - this.last_sync >= SYNC_INTERVAL)
+            {
+                this.SyncToPlayer();
+                this.last_sync = currentTime;
+            }
+            this.FinishBuilds();
+            this.ClearCooldowns();
 		}
 
-		public void SyncToPlayer()
+        public void SyncToPlayer()
 		{
-			
 			JObject data = new JObject();
-			data["money"] = 1000;
-
-			AirConsole.instance.Message (this.air_console_id, data);
+            data["action"] = "update";
+            data["money"] = this.money;
+            data["garrison"] = this.garrison_list.Count;
+            Debug.Log(data);
+            AirConsole.instance.Message (this.air_console_id, data);
 		}
 
-		public void ReceieveData(JToken data)
+        public void FinishBuilds()
+        {
+            for(int i=this.build_list.Count-1; i>=0; i--)
+            {
+                if(this.build_list[i].Key < DateTime.Now)
+                {
+                    this.garrison_list.Add(this.build_list[i].Value);
+                    this.build_list.RemoveAt(i);
+                }
+            }
+        }
+
+        public void ClearCooldowns()
+        {
+            foreach(KeyValuePair<String, DateTime> cooldown in this.cooldowns)
+            {
+                if(cooldown.Value < DateTime.Now)
+                {
+                    cooldowns.Remove(cooldown.Key);
+                    this.ClearCooldowns();
+                    break;
+                }
+            }
+        }
+
+        public void ReceieveData(JToken data)
 		{
-
+            String action = (String)data["action"];
+            if ("build" == action)
+            {
+                String type = (String)data["type"];
+                if (!this.cooldowns.ContainsKey(type)) {
+                    DateTime completionDateTime = DateTime.Now.AddSeconds(UNIT_INFO[type].build_time);
+                    this.build_list.Add(new KeyValuePair<DateTime, String>(completionDateTime, type));
+                    this.cooldowns.Add(type, completionDateTime);
+                }
+            }
+            else if("deploy" == action)
+            {
+                if(this.garrison_list.Count != 0)
+                {
+                    foreach(String type in this.garrison_list)
+                    {
+                        Debug.Log("Building: " + type);
+                        //Call constructors
+                    }
+                    this.garrison_list.Clear();
+                }
+            }
 		}
-	}
+
+        private class UnitInfo
+        {
+            public float build_time;
+            public int cost;
+
+            public UnitInfo(float build_time, int cost)
+            {
+                this.build_time = build_time;
+                this.cost = cost;
+            }
+        }
+    }
 }
