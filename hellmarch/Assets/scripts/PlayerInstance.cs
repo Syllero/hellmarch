@@ -14,6 +14,9 @@ namespace AssemblyCSharp
 		String nickname;
 		String user_profile_url;
 
+		int income_per_second = 100;
+		int money;
+
 		public int AirConsoleId
 		{
 			get { return air_console_id; }
@@ -29,6 +32,7 @@ namespace AssemblyCSharp
 		public void Update()
 		{
 			float delta = Time.deltaTime;
+			money += (int)(income_per_second * delta);
 			SyncToPlayer();
 		}
 
@@ -36,7 +40,7 @@ namespace AssemblyCSharp
 		{
 			
 			JObject data = new JObject();
-			data["money"] = 1000;
+			data["money"] = this.money;
 
 			AirConsole.instance.Message (this.air_console_id, data);
 		}
