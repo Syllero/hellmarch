@@ -52,6 +52,8 @@ public class shooterUnit : unit {
             if (target && smallestDist < m_shootRange)
             {
                 m_animator.SetBool("shoot", true);
+                m_animator.SetBool("run", false);
+
                 m_movementSpeed = 0;
 
                 if (m_timeSinceLastShot >= m_shotInterval)
