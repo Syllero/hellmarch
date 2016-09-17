@@ -43,8 +43,20 @@ public class shooterUnit : unit {
 
     void OnTriggerEnter(Collider other)
     {
-        var team = other.gameObject.GetComponent<unit>().GetTeam();
-        if (other.gameObject.layer != LayerMask.NameToLayer("Ground") && team != m_team)
+        var otherGameObject = other.gameObject;
+        if(otherGameObject == null)
+        {
+            return;
+        }
+
+        var otherUnit = otherGameObject.GetComponent<unit>();
+        if(otherUnit == null)
+        {
+            return;
+        }
+
+        var team = otherUnit.GetTeam();
+        if (otherGameObject.layer != LayerMask.NameToLayer("Ground") && team != m_team)
         {
             m_animator.enabled = false;
             m_collider.enabled = false;
