@@ -75,6 +75,11 @@ public class main : MonoBehaviour {
     public void SpawnUnit(string type, int team, int row, int column)
     {
         GameObject go = Instantiate(Resources.Load(type)) as GameObject;
+	
+		GameObject avatar = Resources.Load<GameObject> ("Avatar");
+		avatar.GetComponents<AvatarLoading> ()[0].url = "http://i.imgur.com/3swWkvj.jpg";
+		avatar = Instantiate (avatar);
+		avatar.transform.SetParent (go.transform);
 
         Vector3 direction = team == 0 ? new Vector3(0, 0, 1) : new Vector3(0, 0, -1);
         go.GetComponent<unit>().Initialize(direction, team, this);
