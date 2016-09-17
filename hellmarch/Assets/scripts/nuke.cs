@@ -42,7 +42,7 @@ public class nuke : MonoBehaviour {
                 Vector3 direction = m_pushers[0] > m_pushers[1] ? new Vector3(0, 0, 1) : new Vector3(0, 0, -1);
                 var log = Mathf.Log(Mathf.Abs(m_pushers[0] - m_pushers[1]));
                 Debug.Log("Log: " + log);
-                actualPushSpeed = Mathf.Min(log, m_pushSpeed) * 10;
+                actualPushSpeed = Mathf.Min(log, m_pushSpeed);
                 transform.position += direction * actualPushSpeed * Time.deltaTime;
             }
 
