@@ -13,7 +13,7 @@ public class suicideUnit : unit {
     // Use this for initialization
     new void Start () {
         base.Start();
-        m_animator.SetBool("run", true);
+        m_animator.SetBool("runBomb", true);
         m_movementSpeed = 20;
     }
 
@@ -56,6 +56,15 @@ public class suicideUnit : unit {
                 });
 
                 ReceiveDamage(m_health);
+
+                var transforms = gameObject.GetComponentsInChildren<Transform>();
+                foreach (Transform child in transforms)
+                {
+                    if (child.CompareTag("bomb"))
+                        Destroy(child.gameObject);
+                }
+
+                //var t = transform.FindChild("suicide_bomb");
 
                 GameObject su = Instantiate(Resources.Load("SimpleFX/Prefabs/FX_Explosion_Rubble")) as GameObject;
                 su.transform.position = transform.position;
