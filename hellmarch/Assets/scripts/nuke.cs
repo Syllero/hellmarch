@@ -5,6 +5,7 @@ using System.Collections.Generic;
 public class nuke : MonoBehaviour {
 
     private Dictionary<int, int> m_pushers;
+    public float m_pushSpeed = 2;
 
 	// Use this for initialization
 	new void Start () {
@@ -32,8 +33,12 @@ public class nuke : MonoBehaviour {
         }
         else
         {
+            Debug.Log("team 0: " + m_pushers[0]);
+            Debug.Log("team 1: " + m_pushers[1]);
+
             Vector3 direction = m_pushers[0] > m_pushers[1] ? new Vector3(0, 0, 1) : new Vector3(0, 0, -1);
-            transform.position += direction * Mathf.Abs(m_pushers[0] - m_pushers[1]) * Time.deltaTime;
+
+            transform.position += direction * Mathf.Min(Mathf.Log(Mathf.Abs(m_pushers[0] - m_pushers[1])), m_pushSpeed) * Time.deltaTime;
         } 
     }
 }
