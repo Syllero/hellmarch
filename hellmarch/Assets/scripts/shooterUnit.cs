@@ -6,13 +6,13 @@ public class shooterUnit : unit {
 
     // Use this for initialization
 
-    int m_targetRange = 30;
-    int m_shootRange = 15;
+    int m_targetRange = 50;
+    int m_shootRange = 35;
 
     int m_shotInterval = 1;
     float m_timeSinceLastShot;
 
-    int m_damage = 2;
+    int m_damage = 5;
 
 	new void Start ()
     {

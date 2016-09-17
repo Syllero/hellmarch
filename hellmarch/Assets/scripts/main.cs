@@ -76,50 +76,86 @@ public class main : MonoBehaviour {
 			players [i].Update ();
 		}
 
-        if(Input.GetKeyDown(KeyCode.Keypad9))
-        {
-            SpawnUnit("dude", 0, 2, 8);
-            SpawnUnit("suicideDude", 0, 2, 8);
-            SpawnUnit("pusher", 0, 2, 8);
-        }
-
-        if(Input.GetKeyDown(KeyCode.Keypad6))
-        {
-            SpawnUnit("dude", 0, 1, 8);
-            SpawnUnit("suicideDude", 0, 1, 8);
-            SpawnUnit("pusher", 0, 1, 8);
-        }
-
-
-        if(Input.GetKeyDown(KeyCode.Keypad3))
-        {
-            SpawnUnit("dude", 0, 0, 8);
-            SpawnUnit("suicideDude", 0, 0, 8);
-            SpawnUnit("pusher", 0, 0, 8);
-        }
-
         if (Input.GetKeyDown(KeyCode.Keypad7))
         {
-            SpawnUnit("dude", 1, 2, 0);
-            SpawnUnit("suicideDude", 1, 2, 0);
-            SpawnUnit("pusher", 1, 2, 0);
+            SpawnUnit("dude", 0, 0, 8);
+        }
+        if (Input.GetKeyDown(KeyCode.Keypad8))
+        {
+            SpawnUnit("suicideDude", 0, 0, 8);
+        }
+        if (Input.GetKeyDown(KeyCode.Keypad9))
+        {
+            SpawnUnit("pusher", 0, 0, 8);
         }
 
         if (Input.GetKeyDown(KeyCode.Keypad4))
         {
-            SpawnUnit("dude", 1, 1, 0);
-            SpawnUnit("suicideDude", 1, 1, 0);
-            SpawnUnit("pusher", 1, 1, 0);
+            SpawnUnit("dude", 0, 1, 8);
         }
-
+        if (Input.GetKeyDown(KeyCode.Keypad5))
+        {
+            SpawnUnit("suicideDude", 0, 1, 8);
+        }
+        if (Input.GetKeyDown(KeyCode.Keypad6))
+        {
+            SpawnUnit("pusher", 0, 1, 8);
+        }
 
         if (Input.GetKeyDown(KeyCode.Keypad1))
         {
+            SpawnUnit("dude", 0, 2, 8);
+        }
+        if (Input.GetKeyDown(KeyCode.Keypad2))
+        {
+            SpawnUnit("suicideDude", 0, 2, 8);
+        }
+        if (Input.GetKeyDown(KeyCode.Keypad3))
+        {
+            SpawnUnit("pusher", 0, 2, 8);
+        }
+
+
+
+
+        if (Input.GetKeyDown(KeyCode.Q))
+        {
             SpawnUnit("dude", 1, 0, 0);
+        }
+        if (Input.GetKeyDown(KeyCode.W))
+        {
             SpawnUnit("suicideDude", 1, 0, 0);
+        }
+        if (Input.GetKeyDown(KeyCode.E))
+        {
             SpawnUnit("pusher", 1, 0, 0);
         }
 
+        if (Input.GetKeyDown(KeyCode.A))
+        {
+            SpawnUnit("dude", 1, 1, 0);
+        }
+        if (Input.GetKeyDown(KeyCode.S))
+        {
+            SpawnUnit("suicideDude", 1, 1, 0);
+        }
+        if (Input.GetKeyDown(KeyCode.D))
+        {
+            SpawnUnit("pusher", 1, 1, 0);
+        }
+
+        if (Input.GetKeyDown(KeyCode.Z))
+        {
+            SpawnUnit("dude", 1, 2, 0);
+        }
+        if (Input.GetKeyDown(KeyCode.X))
+        {
+            SpawnUnit("suicideDude", 1, 2, 0);
+        }
+        if (Input.GetKeyDown(KeyCode.C))
+        {
+            SpawnUnit("pusher", 1, 2, 0);
+        }
 
     }
 
