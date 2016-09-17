@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class unit : MonoBehaviour {
 
@@ -8,13 +9,35 @@ public class unit : MonoBehaviour {
     protected int m_movementSpeed;
 
     protected Animator m_animator;
+    protected Collider m_collider;
+
+    protected Vector3 m_direction;
+    protected Vector3 m_startDirection;
+
+    protected float m_maxRange;
+
+    protected main m_main;
+
+    protected bool m_move;
+
+    public int GetTeam() { return m_team; }
+
 
 	// Use this for initialization
 	protected void Start ()
     {
         m_health = 10;
         m_animator = GetComponent<Animator>();
-        m_movementSpeed = 3;
+        m_collider = GetComponent<Collider>();
+        m_movementSpeed = 20;
+        m_move = true;
+    }
+
+    public void Initialize(Vector3 startDirection, int team, main main)
+    {
+        SetTeam(team);
+        m_direction = m_startDirection = startDirection;
+        m_main = main;
     }
 
     public void SetTeam(int team)
@@ -25,8 +48,6 @@ public class unit : MonoBehaviour {
     // Update is called once per frame
     protected void Update ()
     {
-        float step = m_movementSpeed * Time.deltaTime;
-        //transform.position = Vector3.MoveTowards(transform.position, new Vector3(100, 0, 100), step);
-        //transform.LookAt(new Vector3(100, 0, 100));
-	}
+      
+    }
 }
