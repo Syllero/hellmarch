@@ -1,0 +1,5 @@
+*.assets diff=unityyamlmerge
+*.mat diff=unityyamlmerge
+*.prefab diff=unityyamlmerge
+*.controller diff=unityyamlmerge
+
