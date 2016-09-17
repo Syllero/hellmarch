@@ -3,13 +3,17 @@ using NDream.AirConsole;
 using System.Collections;
 using System.Collections.Generic;
 using Newtonsoft.Json.Linq;
+using AssemblyCSharp;
 
 public class main : MonoBehaviour {
+
+	List<PlayerInstance> players;
 
     public Dictionary<int, List<GameObject>> units = new Dictionary<int, List<GameObject>>();
 
 	// Use this for initialization
 	void Start () {
+		players = new List<PlayerInstance> ();
         Debug.Log("asofpasfpoasfusa");
         AirConsole.instance.onMessage += OnMessage;
         AirConsole.instance.onConnect += OnConnect;
@@ -44,14 +48,33 @@ public class main : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-	
+		for (int i = 0; i < players.Count; i++) {
+			players [i].Update ();
+		}
 	}
 
     void OnMessage(int from, JToken data) {
-        
+		Debug.Log("Got message from " + from + " " + data.ToString ());
+		for (int i = 0; i < players.Count; i++) {
+			if (players [i].AirConsoleId == from) {
+				players [i].ReceieveData (data);
+			}
+		}
     }
 
     void OnConnect(int device_id) {
-
+		Debug.Log ("User connected" + device_id);
+		players.Add (new PlayerInstance (device_id));
     }
+
+	void OnDisconnect( int device_id ) {
+		Debug.Log ("User disconnected" + device_id);
+
+		for (int i = 0; i < players.Count; i++) {
+			if (players [i].AirConsoleId == device_id) {
+				players.RemoveAt (i);
+				break;
+			}
+		}
+	}
 }
