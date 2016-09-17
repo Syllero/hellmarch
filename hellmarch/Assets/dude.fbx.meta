@@ -1,0 +1,153 @@
+fileFormatVersion: 2
+guid: 525ac369982bc1a44ad285e9e5031175
+timeCreated: 1474108711
+licenseType: Free
+ModelImporter:
+  serializedVersion: 19
+  fileIDToRecycleName:
+    100000: arm_IK_L
+    100002: arm_IK_L_end
+    100004: arm_IK_R
+    100006: arm_IK_R_end
+    100008: Armature
+    100010: chest
+    100012: Cube Man
+    100014: //RootNode
+    100016: elbow_L
+    100018: elbow_L_end
+    100020: elbow_R
+    100022: elbow_R_end
+    100024: head
+    100026: head_end
+    100028: knee_L
+    100030: knee_L_end
+    100032: knee_R
+    100034: knee_R_end
+    100036: leg_IK_L
+    100038: leg_IK_L_end
+    100040: leg_IK_R
+    100042: leg_IK_R_end
+    100044: lookat
+    100046: lookat_end
+    100048: lower_arm_L
+    100050: lower_arm_L_end
+    100052: lower_arm_R
+    100054: lower_arm_R_end
+    100056: lower_leg_L
+    100058: lower_leg_L_end
+    100060: lower_leg_R
+    100062: lower_leg_R_end
+    100064: root
+    100066: stomach
+    100068: upper_arm_L
+    100070: upper_arm_R
+    100072: upper_leg_L
+    100074: upper_leg_R
+    400000: arm_IK_L
+    400002: arm_IK_L_end
+    400004: arm_IK_R
+    400006: arm_IK_R_end
+    400008: Armature
+    400010: chest
+    400012: Cube Man
+    400014: //RootNode
+    400016: elbow_L
+    400018: elbow_L_end
+    400020: elbow_R
+    400022: elbow_R_end
+    400024: head
+    400026: head_end
+    400028: knee_L
+    400030: knee_L_end
+    400032: knee_R
+    400034: knee_R_end
+    400036: leg_IK_L
+    400038: leg_IK_L_end
+    400040: leg_IK_R
+    400042: leg_IK_R_end
+    400044: lookat
+    400046: lookat_end
+    400048: lower_arm_L
+    400050: lower_arm_L_end
+    400052: lower_arm_R
+    400054: lower_arm_R_end
+    400056: lower_leg_L
+    400058: lower_leg_L_end
+    400060: lower_leg_R
+    400062: lower_leg_R_end
+    400064: root
+    400066: stomach
+    400068: upper_arm_L
+    400070: upper_arm_R
+    400072: upper_leg_L
+    400074: upper_leg_R
+    4300000: Cube Man
+    7400000: Armature|idle
+    7400002: Armature|Shoot
+    7400004: Armature|T_pose
+    9500000: //RootNode
+    13700000: Cube Man
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
