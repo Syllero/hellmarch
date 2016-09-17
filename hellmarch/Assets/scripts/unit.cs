@@ -68,6 +68,12 @@ public class unit : MonoBehaviour {
     {
         m_health -= damage;
 
+        GameObject su = Instantiate(Resources.Load("SimpleFX/Prefabs/FX_BloodSplatter")) as GameObject;
+        su.transform.position = transform.position + new Vector3(0, 2, 0);
+        su.transform.RotateAround(Vector3.up, Random.Range(0, 359));
+
+        Destroy(su, 10); 
+
         if (m_health <= 0)
         {
             m_main.units[m_team].Remove(this.gameObject);
