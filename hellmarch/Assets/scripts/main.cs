@@ -10,11 +10,11 @@ public class main : MonoBehaviour {
 	List<PlayerInstance> players;
 
     public Dictionary<int, List<GameObject>> units = new Dictionary<int, List<GameObject>>();
+    public GameObject nuke;
+    // Use this for initialization
+    void Start () {
+		players = new List<PlayerInstance> (); 
 
-	// Use this for initialization
-	void Start () {
-		players = new List<PlayerInstance> ();
-        Debug.Log("asofpasfpoasfusa");
         AirConsole.instance.onMessage += OnMessage;
         AirConsole.instance.onConnect += OnConnect;
 
@@ -23,6 +23,8 @@ public class main : MonoBehaviour {
 
         units.Add(0, new List<GameObject>());
         units.Add(1, new List<GameObject>());
+
+        nuke = Instantiate(Resources.Load("bomb")) as GameObject;
 
         for (int i = 0; i < 10; i++)
         {

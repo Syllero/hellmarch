@@ -13,6 +13,13 @@ public class pusherUnit : unit {
 	// Update is called once per frame
 	new void Update () {
         base.Update();
+
+        if (m_move)
+        {
+            float step = m_movementSpeed * Time.deltaTime;
+            Vector3.MoveTowards(transform.position, m_main.nuke.transform.position, step);
+            transform.LookAt(transform.position + m_direction);
+        }
 	
 	}
 }
