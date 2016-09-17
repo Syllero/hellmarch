@@ -114,7 +114,12 @@ public class main : MonoBehaviour {
                     Destroy(ps, 3);
 
                     GameObject su = Instantiate(Resources.Load("SimpleFX/Prefabs/FX_Explosion_Rubble")) as GameObject;
-                    su.transform.position = nuke.transform.position + new Vector3(Random.Range(-100, 100), 0, Random.Range(0, 25));
+
+                    if (winningTeam == 0)
+                        su.transform.position = nuke.transform.position + new Vector3(Random.Range(-100, 100), 0, Random.Range(25, 125));
+                    else
+                        su.transform.position = nuke.transform.position + new Vector3(Random.Range(-100, 100), 0, -Random.Range(25, 125));
+
 
                     Destroy(su, 3);
                 } 
@@ -164,7 +169,7 @@ public class main : MonoBehaviour {
             playerIDs[i] = playerIDs[randomIndex];
             playerIDs[randomIndex] = temp;
         }
-        int index = 0;
+
         playerIDs.ForEach(x =>
         {
             players.Add(new PlayerInstance(x, TEAM_ASSIGNER++ % 2));
