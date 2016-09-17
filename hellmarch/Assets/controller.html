@@ -33,8 +33,8 @@
 		* Here we are adding support for mouse events manually.
 		* WE STRONGLY ENCOURAGE YOU TO USE THE AIRCONSOLE CONTROLS LIBRARY
 		* WHICH IS EVEN BETTER (BUT WE DONT WANT TO BLOAT THE CODE HERE).
-		* https://github.com/AirConsole/airconsole-controls/
 		* 
+		* https://github.com/AirConsole/airconsole-controls/
 		* NO MATTER WHAT YOU DECIDE, DO NOT USE ONCLICK HANDLERS.
 		* THEY HAVE A 200MS DELAY!
 		*/
@@ -66,12 +66,18 @@
  
 </head>
 <body onload="window.app = new App()">
+	<div class="jumbotron">
+		<div class="container">
+			<img class="img-responsive" src="img/hell_march.png"/>
+		</div>
+	</div>
 	<div class="container-fluid">
+		
 		<div class="row">
 			<div class="col-xs-12">
 				<ul class="nav nav-tabs">
-					<li class="active"><a data-toggle="tab" href="#menu1">Menu 1</a></li>
-					<li><a data-toggle="tab" href="#menu2">Menu 2</a></li>
+					<li class="active"><a data-toggle="tab" href="#menu1">Barracks</a></li>
+					<li><a data-toggle="tab" href="#menu2">Command</a></li>
 				</ul>
 			</div>
 		</div>
@@ -80,12 +86,12 @@
 				<div id="menu1" class="tab-pane active">
 					<div class="col-xs-4">
 						<div class="btn btn-default">
-							<img src="img/red_icon.png" class="img-responsive" ontouchstart="window.app.sendMessageToScreen('left')" ontouchend="window.app.sendMessageToScreen('stop')"></img>
+							<img src="img/soldier_icon.png" class="img-responsive" ontouchstart="window.app.sendMessageToScreen('left')" ontouchend="window.app.sendMessageToScreen('stop')"></img>
 						</div>
 					</div>
 					<div class="col-xs-4">
 						<div class="btn btn-default">
-							<img src="img/green_icon.png" class="img-responsive" ontouchstart="window.app.sendMessageToScreen('right')" ontouchend="window.app.sendMessageToScreen('stop')"></img>
+							<img src="img/bomber_icon.png" class="img-responsive" ontouchstart="window.app.sendMessageToScreen('right')" ontouchend="window.app.sendMessageToScreen('stop')"></img>
 						</div>
 					</div>
 					<div class="col-xs-4">
@@ -97,7 +103,7 @@
 				<div id="menu2" class="tab-pane">
 					<div class="col-xs-6">
 						<div class="btn btn-default">
-							<img src="img/red_icon.png" class="img-responsive" ontouchstart="window.app.sendMessageToScreen('right')" ontouchend="window.app.sendMessageToScreen('stop')"></img>
+							<img src="img/blue_icon.png" class="img-responsive" ontouchstart="window.app.sendMessageToScreen('right')" ontouchend="window.app.sendMessageToScreen('stop')"></img>
 						</div>
 					</div>
 					<div class="col-xs-6">
@@ -106,6 +112,24 @@
 						</div>
 					</div>
 				</div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-xs-12">
+				<table class="table table-condensed">
+					<thead>
+						<tr>
+							<th>Garrison</th>
+							<th>Funds</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td><span class="glyphicon glyphicon-user"></span>1000</td>
+							<td><span class="glyphicon glyphicon-usd"></span>2000</td>
+						</tr>
+					</tbody>
+				</table>
 			</div>
 		</div>
 		<div class="row">
