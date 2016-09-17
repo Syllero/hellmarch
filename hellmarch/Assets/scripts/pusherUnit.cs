@@ -11,6 +11,7 @@ public class pusherUnit : unit {
         base.Start();
         m_animator.SetBool("runNormal", true);
         m_movementSpeed = 20;
+        m_killTimer = 1;
     }
 	
 	// Update is called once per frame
@@ -23,7 +24,6 @@ public class pusherUnit : unit {
 
             if (dist <= pushRange)
             {
-                Debug.Log(dist);
                 transform.parent = m_main.nuke.transform;
 
                 if (!pushing)
@@ -43,9 +43,19 @@ public class pusherUnit : unit {
 	
 	}
 
+    public override bool ReceiveExplosion(int damage, int force, int range, Vector3 position)
+    {
+        if(ReceiveDamage(damage) && pushing)
+        {
+            return base.ReceiveExplosion(damage, force, range, position);
+        }
+
+        return false;
+    }
+
     public override bool ReceiveDamage(int damage)
     {
-        if(base.ReceiveDamage(damage))
+        if(base.ReceiveDamage(damage) && pushing)
         {
             m_main.nuke.GetComponent<nuke>().RemovePusher(m_team);
             pushing = false;

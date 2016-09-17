@@ -20,6 +20,8 @@ public class unit : MonoBehaviour {
 
     protected bool m_move;
 
+    protected int m_killTimer;
+
     public int GetTeam() { return m_team; }
 
 
@@ -30,6 +32,7 @@ public class unit : MonoBehaviour {
         m_animator = GetComponent<Animator>();
         m_collider = GetComponent<Collider>();
         m_movementSpeed = 20;
+        m_killTimer = 3;
         m_move = true;
     }
 
@@ -45,7 +48,7 @@ public class unit : MonoBehaviour {
         m_team = team;
     }
 
-    public bool ReceiveExplosion(int damage, int force, int range, Vector3 position)
+    public virtual bool ReceiveExplosion(int damage, int force, int range, Vector3 position)
     {
         if(ReceiveDamage(damage))
         {
@@ -82,7 +85,7 @@ public class unit : MonoBehaviour {
             m_collider.enabled = false;
             m_move = false;
 
-            Invoke("KillMe", 20);
+            Invoke("KillMe", m_killTimer);
             return true;
         }
         return false;

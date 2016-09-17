@@ -11,6 +11,14 @@ public class main : MonoBehaviour {
 
     public Dictionary<int, List<GameObject>> units = new Dictionary<int, List<GameObject>>();
     public GameObject nuke;
+
+    int width = 50;
+    int height = 25;
+
+    int xOffset = 25;
+    int zOffset = 125;
+
+
     // Use this for initialization
     void Start () {
 		players = new List<PlayerInstance> (); 
@@ -25,42 +33,20 @@ public class main : MonoBehaviour {
         units.Add(1, new List<GameObject>());
 
         nuke = Instantiate(Resources.Load("bomb")) as GameObject;
-        nuke.transform.position = Vector3.zero;
+        nuke.transform.position = new Vector3(xOffset - 1 * width, 0, zOffset - 4 * height);
 
         for (int i = 0; i < 10; i++)
         {
-            GameObject su = Instantiate(Resources.Load("dude")) as GameObject;
-            su.transform.Translate(-50 + i * 10, 0, -100);
-            su.GetComponent<shooterUnit>().Initialize(new Vector3(0,0,1), 0, this);
-            units[0].Add(su);
-
-            GameObject suicider = Instantiate(Resources.Load("suicideDude")) as GameObject;
-            suicider.transform.Translate(-50 + i * 10, 0, -120);
-            suicider.GetComponent<suicideUnit>().Initialize(new Vector3(0, 0, 1), 0, this);
-            units[0].Add(suicider);
-
-            GameObject pusher = Instantiate(Resources.Load("pusher")) as GameObject;
-            pusher.transform.Translate(-50 + i * 10, 0, -130);
-            pusher.GetComponent<pusherUnit>().Initialize(new Vector3(0, 0, 1), 0, this);
-            units[0].Add(pusher);
+            SpawnUnit("dude", 0, 0, 8);
+            SpawnUnit("suicideDude", 0, 1, 8);
+            SpawnUnit("pusher", 0, 2, 8);
         }
 
         for (int i = 0; i < 10; i++)
         {
-            GameObject su = Instantiate(Resources.Load("dude")) as GameObject;
-            su.transform.Translate(-50 + i * 12, 0, 100);
-            su.GetComponent<shooterUnit>().Initialize(new Vector3(0, 0, -1), 1, this);
-            units[1].Add(su);
-
-            GameObject suicider = Instantiate(Resources.Load("suicideDude")) as GameObject;
-            suicider.transform.Translate(-50 + i * 10, 0, 120);
-            suicider.GetComponent<suicideUnit>().Initialize(new Vector3(0, 0, -1), 1, this);
-            units[1].Add(suicider);
-
-            GameObject pusher = Instantiate(Resources.Load("pusher")) as GameObject;
-            pusher.transform.Translate(-50 + i * 10, 0, 130);
-            pusher.GetComponent<pusherUnit>().Initialize(new Vector3(0, 0, -1), 1, this);
-            units[1].Add(pusher);
+            SpawnUnit("dude", 1, 0, 0);
+            SpawnUnit("suicideDude", 1, 1, 0);
+            SpawnUnit("pusher", 1, 2, 0);
         }
     }
 
@@ -68,13 +54,74 @@ public class main : MonoBehaviour {
     {
         return new List<GameObject>();
     }
+
+    public void SpawnUnit(string type, int team, int row, int column)
+    {
+        GameObject go = Instantiate(Resources.Load(type)) as GameObject;
+
+        Vector3 direction = team == 0 ? new Vector3(0, 0, 1) : new Vector3(0, 0, -1);
+        go.GetComponent<unit>().Initialize(direction, team, this);
+
+        float spawnX = xOffset - row * width;
+        float spawnZ = zOffset - column * height;
+
+        go.transform.position = new Vector3(Random.Range(spawnX, spawnX - width), 0, Random.Range(spawnZ, spawnZ - height));
+
+        units[team].Add(go);
+    }
 	
 	// Update is called once per frame
 	void Update () {
 		for (int i = 0; i < players.Count; i++) {
 			players [i].Update ();
 		}
-	}
+
+        if(Input.GetKeyDown(KeyCode.Keypad9))
+        {
+            SpawnUnit("dude", 0, 2, 8);
+            SpawnUnit("suicideDude", 0, 2, 8);
+            SpawnUnit("pusher", 0, 2, 8);
+        }
+
+        if(Input.GetKeyDown(KeyCode.Keypad6))
+        {
+            SpawnUnit("dude", 0, 1, 8);
+            SpawnUnit("suicideDude", 0, 1, 8);
+            SpawnUnit("pusher", 0, 1, 8);
+        }
+
+
+        if(Input.GetKeyDown(KeyCode.Keypad3))
+        {
+            SpawnUnit("dude", 0, 0, 8);
+            SpawnUnit("suicideDude", 0, 0, 8);
+            SpawnUnit("pusher", 0, 0, 8);
+        }
+
+        if (Input.GetKeyDown(KeyCode.Keypad7))
+        {
+            SpawnUnit("dude", 1, 2, 0);
+            SpawnUnit("suicideDude", 1, 2, 0);
+            SpawnUnit("pusher", 1, 2, 0);
+        }
+
+        if (Input.GetKeyDown(KeyCode.Keypad4))
+        {
+            SpawnUnit("dude", 1, 1, 0);
+            SpawnUnit("suicideDude", 1, 1, 0);
+            SpawnUnit("pusher", 1, 1, 0);
+        }
+
+
+        if (Input.GetKeyDown(KeyCode.Keypad1))
+        {
+            SpawnUnit("dude", 1, 0, 0);
+            SpawnUnit("suicideDude", 1, 0, 0);
+            SpawnUnit("pusher", 1, 0, 0);
+        }
+
+
+    }
 
     void OnMessage(int from, JToken data) {
 		Debug.Log("Got message from " + from + " " + data.ToString ());
