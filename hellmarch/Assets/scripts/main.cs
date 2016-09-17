@@ -7,6 +7,7 @@ using AssemblyCSharp;
 
 public class main : MonoBehaviour {
 
+    private static int TEAM_ASSIGNER = 0;
 	List<PlayerInstance> players;
 
     public Dictionary<int, List<GameObject>> units = new Dictionary<int, List<GameObject>>();
@@ -155,7 +156,6 @@ public class main : MonoBehaviour {
         {
             SpawnUnit("pusher", 1, 2, 0);
         }
-
     }
 
     void OnMessage(int from, JToken data) {
@@ -169,7 +169,7 @@ public class main : MonoBehaviour {
 
     void OnConnect(int device_id) {
 		Debug.Log ("User connected" + device_id);
-		players.Add (new PlayerInstance (device_id));
+		players.Add (new PlayerInstance (device_id, TEAM_ASSIGNER++ % 2));
     }
 
 	void OnDisconnect( int device_id ) {

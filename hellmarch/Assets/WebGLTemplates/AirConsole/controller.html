@@ -58,6 +58,14 @@
 		}
 		this.airconsole.message(AirConsole.SCREEN, request);
 	};
+	
+	App.prototype.deployTroops = function() {
+		var request = {
+			action: "deploy",
+			row:document.getElementById('launch-row').selectedIndex
+		}
+		this.airconsole.message(AirConsole.SCREEN, request);
+	};
     
     App.prototype.sendMessageToScreen = function(msg) {
 		this.airconsole.message(AirConsole.SCREEN, msg);
@@ -113,7 +121,7 @@
 					</div>
 					<div class="col-xs-6">
 						<div class="btn btn-default" data-toggle="modal" data-target="#launchModal">
-							<img src="img/green_icon.png" class="img-responsive" ontouchstart="window.app.broadcastMessage('Hey everyone!')"></img>
+							<img src="img/green_icon.png" class="img-responsive"></img>
 						</div>
 					</div>
 					<div id="launchModal" class="modal fade" role="dialog">
@@ -127,22 +135,8 @@
 								<div class="modal-body container">
 									<div class="row">
 										<div class="col-xs-6">
-											<label for="launch-x">X Coordinate:</label>
-											<select class="form-control" id="launch-x">
-												<option>1</option>
-												<option>2</option>
-												<option>3</option>
-												<option>4</option>
-												<option>5</option>
-												<option>6</option>
-												<option>7</option>
-												<option>8</option>
-												<option>9</option>
-											</select>
-										</div>
-										<div class="col-xs-6">
-											<label for="launch-y">Y Coordinate:</label>
-											<select class="form-control" id="launch-y">
+											<label for="launch-row">Select Lane:</label>
+											<select class="form-control" id="launch-row">
 												<option>A</option>
 												<option>B</option>
 												<option>C</option>
@@ -152,7 +146,7 @@
 									<div class="row">
 										<div class="col-xs-12">
 											<div class="btn btn-default" data-dismiss="modal">
-												<img src="img/green_icon.png" class="img-responsive" ontouchstart="window.app.broadcastMessage('Hey everyone!')"></img>
+												<img src="img/green_icon.png" class="img-responsive" ontouchstart="window.app.deployTroops()"></img>
 											</div>
 										</div>
 									</div>

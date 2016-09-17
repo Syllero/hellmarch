@@ -11,12 +11,20 @@ namespace AssemblyCSharp
 	public class PlayerInstance
 	{
         static readonly float SYNC_INTERVAL = 0.5f;
+
         static readonly Dictionary<String, UnitInfo> UNIT_INFO = new Dictionary<string, UnitInfo> {
-            { "soldier", new UnitInfo(5.0f, 1000)},
-            { "bomber", new UnitInfo(7.5f, 1500)},
+            { "soldier", new UnitInfo(3.0f, 600, "dude")},
+            { "bomber", new UnitInfo(5.0f, 1000, "suicideDude")},
+            { "pusher", new UnitInfo(1.5f, 200, "pusher")},
         };
-       
+
+        static readonly Dictionary<int, TeamInfo> TEAM_INFO = new Dictionary<int, TeamInfo> {
+            { 0, new TeamInfo(8)},
+            { 1, new TeamInfo(0)},
+        };
+
         int air_console_id;
+        int team_id;
         float last_sync = 0;
 		String nickname;
 		String user_profile_url;
@@ -32,9 +40,10 @@ namespace AssemblyCSharp
 			get { return air_console_id; }
 		}
 
-		public PlayerInstance ( int air_console_id )
+		public PlayerInstance ( int air_console_id, int team_id )
 		{
 			this.air_console_id = air_console_id;
+            this.team_id = team_id;
 			this.nickname = AirConsole.instance.GetNickname (this.air_console_id);
 			this.user_profile_url = AirConsole.instance.GetProfilePicture (this.air_console_id);
 		}
@@ -112,10 +121,13 @@ namespace AssemblyCSharp
             {
                 if(this.garrison_list.Count != 0)
                 {
-                    foreach(String type in this.garrison_list)
+                    main main_object = GameObject.FindGameObjectWithTag("main").GetComponent<main>();
+                    int column = TEAM_INFO[this.team_id].start_column;
+                    int row = (int)data["row"];
+                    foreach (String type in this.garrison_list)
                     {
                         Debug.Log("Building: " + type);
-                        //Call constructors
+                        main_object.SpawnUnit(UNIT_INFO[type].build_name, this.team_id, row, column);
                     }
                     this.garrison_list.Clear();
                 }
@@ -126,11 +138,23 @@ namespace AssemblyCSharp
         {
             public float build_time;
             public int cost;
+            public String build_name;
 
-            public UnitInfo(float build_time, int cost)
+            public UnitInfo(float build_time, int cost, String build_name)
             {
                 this.build_time = build_time;
                 this.cost = cost;
+                this.build_name = build_name;
+            }
+        }
+
+        private class TeamInfo
+        {
+            public int start_column;
+
+            public TeamInfo(int start_column)
+            {
+                this.start_column = start_column;
             }
         }
 
