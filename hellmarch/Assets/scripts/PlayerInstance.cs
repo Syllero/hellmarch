@@ -12,8 +12,8 @@ namespace AssemblyCSharp
 	{
         static readonly float SYNC_INTERVAL = 0.5f;
         static readonly Dictionary<String, UnitInfo> UNIT_INFO = new Dictionary<string, UnitInfo> {
-            { "soldier", new UnitInfo(5.0f, 10)},
-            { "bomber", new UnitInfo(7.5f, 15)},
+            { "soldier", new UnitInfo(5.0f, 1000)},
+            { "bomber", new UnitInfo(7.5f, 1500)},
         };
        
         int air_console_id;
@@ -26,7 +26,6 @@ namespace AssemblyCSharp
         List<String> garrison_list = new List<String>();
 
 		int income_per_second = 100;
-		int money;
 
 		public int AirConsoleId
 		{
@@ -43,7 +42,7 @@ namespace AssemblyCSharp
 		public void Update()
 		{
 		    float delta = Time.deltaTime;
-		    money += (int)(income_per_second * delta);
+		    this.money += (int)(income_per_second * delta);
 
 		    float currentTime = Time.realtimeSinceStartup;
 		    if(currentTime - this.last_sync >= SYNC_INTERVAL)
@@ -55,10 +54,9 @@ namespace AssemblyCSharp
 		    this.ClearCooldowns();
 		}
 
-                public void SyncToPlayer()
-		{
-	            JObject data = new JObject();
-
+        public void SyncToPlayer()
+        {
+            JObject data = new JObject();
 		    data["action"] = "update";
 		    data["money"] = this.money;
 		    data["garrison"] = this.garrison_list.Count;
@@ -96,10 +94,18 @@ namespace AssemblyCSharp
             if ("build" == action)
             {
                 String type = (String)data["type"];
-                if (!this.cooldowns.ContainsKey(type)) {
+                if (this.cooldowns.ContainsKey(type))
+                {
+                    this.SendError("Already in construction!");
+                }
+                else if(this.money < UNIT_INFO[type].cost)
+                {
+                    this.SendError("Insufficient funds!");
+                } else { 
                     DateTime completionDateTime = DateTime.Now.AddSeconds(UNIT_INFO[type].build_time);
                     this.build_list.Add(new KeyValuePair<DateTime, String>(completionDateTime, type));
                     this.cooldowns.Add(type, completionDateTime);
+                    this.money -= UNIT_INFO[type].cost;
                 }
             }
             else if("deploy" == action)
@@ -126,6 +132,14 @@ namespace AssemblyCSharp
                 this.build_time = build_time;
                 this.cost = cost;
             }
+        }
+
+        private void SendError(String errorMessage)
+        {
+            JObject data = new JObject();
+            data["action"] = "error";
+            data["message"] = errorMessage;
+            AirConsole.instance.Message(this.air_console_id, data);
         }
     }
 }

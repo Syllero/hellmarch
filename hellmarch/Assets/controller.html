@@ -17,16 +17,13 @@
 		var me = this;
 		me.airconsole = new AirConsole({"orientation": "portrait", "synchronize_time" : "true"});
 		me.airconsole.onMessage = function(from, data) {
-			if( data["money"] )
-			{
-				document.getElementById("money").innerHTML = "Money: " + data["money"];
-			}
-			console.log("onMessage", from, data);
 			switch(data.action) {
 				case "update":
-					document.getElementById('garrison').value = data.garrison;
-					document.getElementById('money').value = data.money;
+					document.getElementById('garrison').innerHTML = data.garrison;
+					document.getElementById('money').innerHTML = data.money;
  					break;
+				case "error":
+					console.log(data.message);
 			}
 		};
       
@@ -94,17 +91,17 @@
 				<div id="menu1" class="tab-pane active">
 					<div class="col-xs-4">
 						<div class="btn btn-default">
-							<img src="img/soldier_icon.png" class="img-responsive" ontouchstart="window.app.orderTroop('soldier')" ontouchend="window.app.sendMessageToScreen('stop')"></img>
+							<img src="img/soldier_icon.png" class="img-responsive" ontouchstart="window.app.orderTroop('soldier')"></img>
 						</div>
 					</div>
 					<div class="col-xs-4">
 						<div class="btn btn-default">
-							<img src="img/bomber_icon.png" class="img-responsive" ontouchstart="window.app.orderTroop('bomber')" ontouchend="window.app.sendMessageToScreen('stop')"></img>
+							<img src="img/bomber_icon.png" class="img-responsive" ontouchstart="window.app.orderTroop('bomber')"></img>
 						</div>
 					</div>
 					<div class="col-xs-4">
 						<div class="btn btn-default">
-							<img src="img/blue_icon.png" class="img-responsive" ontouchstart="window.app.broadcastMessage('Hey everyone!')"></img>
+							<img src="img/blue_icon.png" class="img-responsive" ontouchstart="window.app.orderTroop('pusher')"></img>
 						</div>
 					</div>
 				</div>
@@ -180,8 +177,8 @@
 					</thead>
 					<tbody>
 						<tr>
-							<td><span class="glyphicon glyphicon-user"></span><input type="text" id="garrison" readonly></input></td>
-							<td><span class="glyphicon glyphicon-usd"></span><input type="text" id="money" readonly></input></td>
+							<td><span class="glyphicon glyphicon-user"></span><span id="garrison"></input></td>
+							<td><span class="glyphicon glyphicon-usd"></span><span id="money"></input></td>
 						</tr>
 					</tbody>
 				</table>
