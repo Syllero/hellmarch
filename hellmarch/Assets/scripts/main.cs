@@ -22,7 +22,7 @@ public class main : MonoBehaviour {
 
         for (int i = 0; i < 10; i++)
         {
-            GameObject su = Instantiate(Resources.Load("shooter_unit_new")) as GameObject;
+            GameObject su = Instantiate(Resources.Load("dude")) as GameObject;
             su.transform.Translate(-50 + i * 10, 0, -100);
             su.GetComponent<shooterUnit>().Initialize(new Vector3(0,0,1), 0, this);
             units[0].Add(su);
@@ -30,7 +30,7 @@ public class main : MonoBehaviour {
 
         for (int i = 0; i < 10; i++)
         {
-            GameObject su = Instantiate(Resources.Load("shooter_unit_new")) as GameObject;
+            GameObject su = Instantiate(Resources.Load("dude")) as GameObject;
             su.transform.Translate(-50 + i * 12, 0, 100);
             su.GetComponent<shooterUnit>().Initialize(new Vector3(0, 0, -1), 1, this);
             units[1].Add(su);
