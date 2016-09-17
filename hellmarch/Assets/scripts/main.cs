@@ -97,7 +97,7 @@ public class main : MonoBehaviour {
 
         if (main.winningTeam > -1)
         {
-            for(int i = 0; i < 20; i++)
+            for(int i = 0; i < 10; i++)
             {
                 if (Random.Range(0, 10) == 0)
                 {
@@ -107,6 +107,11 @@ public class main : MonoBehaviour {
                     ps.transform.position = new Vector3(Random.Range(-100, 100), 5, Random.Range(-250, 250));
 
                     Destroy(ps, 3);
+
+                    GameObject su = Instantiate(Resources.Load("SimpleFX/Prefabs/FX_Explosion_Rubble")) as GameObject;
+                    su.transform.position = nuke.transform.position + new Vector3(Random.Range(-100, 100), 0, Random.Range(0, 25));
+
+                    Destroy(su, 3);
                 } 
             }
         }
