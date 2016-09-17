@@ -1,6 +1,6 @@
 fileFormatVersion: 2
-guid: 247e4c41c6f8af545a223cf7f97ad044
-timeCreated: 1474124108
+guid: c714a0d14a166df4ea1bfd27056147a8
+timeCreated: 1474130014
 licenseType: Free
 ModelImporter:
   serializedVersion: 19
@@ -46,7 +46,8 @@ ModelImporter:
     7400014: Armature|Start_Shoot
     7400016: Armature|T_pose
     7400018: Armature|Walk
-    7400020: Armature|WalkWithWeapon
+    7400020: Armature|WalkWithBomb
+    7400022: Armature|WalkWithWeapon
     9500000: //RootNode
     13700000: Cube Man
   materials:
