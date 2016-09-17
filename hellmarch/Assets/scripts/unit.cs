@@ -45,6 +45,25 @@ public class unit : MonoBehaviour {
         m_team = team;
     }
 
+    public bool ReceiveExplosion(int damage, int force, int range, Vector3 position)
+    {
+        if(ReceiveDamage(damage))
+        {
+            var rigidBodies = GetComponentsInChildren<Rigidbody>();
+
+            for(int i = 0; i < rigidBodies.Length; i++)
+            {
+                //rigidBodies[i].AddExplosionForce(force, position, range);
+            } 
+
+            //GetComponent<Rigidbody>().AddExplosionForce(force, position, range);
+            //GetComponent<Rigidbody>().AddForce(new Vector3(0, 0, 1) * 10000, ForceMode.Impulse);
+            return true;
+        }
+
+        return false;
+    }
+
     public bool ReceiveDamage(int damage)
     {
         m_health -= damage;

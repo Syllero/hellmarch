@@ -30,6 +30,11 @@ public class main : MonoBehaviour {
             su.transform.Translate(-50 + i * 10, 0, -100);
             su.GetComponent<shooterUnit>().Initialize(new Vector3(0,0,1), 0, this);
             units[0].Add(su);
+
+            GameObject suicider = Instantiate(Resources.Load("suicideDude")) as GameObject;
+            suicider.transform.Translate(-50 + i * 10, 0, -120);
+            suicider.GetComponent<suicideUnit>().Initialize(new Vector3(0, 0, 1), 0, this);
+            units[0].Add(suicider);
         }
 
         for (int i = 0; i < 10; i++)
@@ -38,6 +43,11 @@ public class main : MonoBehaviour {
             su.transform.Translate(-50 + i * 12, 0, 100);
             su.GetComponent<shooterUnit>().Initialize(new Vector3(0, 0, -1), 1, this);
             units[1].Add(su);
+
+            GameObject suicider = Instantiate(Resources.Load("suicideDude")) as GameObject;
+            suicider.transform.Translate(-50 + i * 10, 0, 120);
+            suicider.GetComponent<suicideUnit>().Initialize(new Vector3(0, 0, -1), 1, this);
+            units[1].Add(suicider);
         }
     }
 
