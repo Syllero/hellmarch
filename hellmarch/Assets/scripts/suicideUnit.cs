@@ -56,6 +56,11 @@ public class suicideUnit : unit {
                 });
 
                 ReceiveDamage(m_health);
+
+                GameObject su = Instantiate(Resources.Load("SimpleFX/Prefabs/FX_Explosion_Rubble")) as GameObject;
+                su.transform.position = transform.position;
+
+                Destroy(su, 10);
             }
         }       
 	}
