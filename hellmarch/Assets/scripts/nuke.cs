@@ -42,6 +42,15 @@ public class nuke : MonoBehaviour {
             Debug.Log("Log: " + log);
             actualPushSpeed = Mathf.Min(log, m_pushSpeed);
             transform.position += direction * actualPushSpeed * Time.deltaTime;
-        } 
+        }
+
+        if (transform.position.z > main.zOffset)
+        {
+            main.winningTeam = 0;
+        }
+        else if (transform.position.z < -main.zOffset - 10)
+        {
+            main.winningTeam = 1;
+        }
     }
 }

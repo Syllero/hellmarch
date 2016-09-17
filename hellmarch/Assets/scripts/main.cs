@@ -19,6 +19,10 @@ public class main : MonoBehaviour {
     public static int xOffset = 25;
     public static int zOffset = 125;
 
+    public static int winningTeam = -1;
+
+    private Dictionary<int, List<string>> victoryEffects = new Dictionary<int, List<string>>();
+
     // Use this for initialization
     void Start () {
 		players = new List<PlayerInstance> (); 
@@ -28,6 +32,16 @@ public class main : MonoBehaviour {
 
         Physics.IgnoreLayerCollision(LayerMask.NameToLayer("RedTeam"), LayerMask.NameToLayer("Ignore"));
         Physics.IgnoreLayerCollision(LayerMask.NameToLayer("BlueTeam"), LayerMask.NameToLayer("Ignore"));
+
+        victoryEffects.Add(0, new List<string>());
+        victoryEffects.Add(1, new List<string>());
+
+        victoryEffects[0].Add("FX_Fireworks_Blue_Large");
+        victoryEffects[0].Add("FX_Fireworks_Blue_Small");
+
+        victoryEffects[1].Add("FX_Fireworks_Yellow_Large");
+        victoryEffects[1].Add("FX_Fireworks_Yelow_Small");
+
 
         units.Add(0, new List<GameObject>());
         units.Add(1, new List<GameObject>());
@@ -71,11 +85,36 @@ public class main : MonoBehaviour {
     }
 	
 	// Update is called once per frame
-	void Update () {
-		for (int i = 0; i < players.Count; i++) {
-			players [i].Update ();
-		}
+	void Update ()
+    {
 
+        for (int i = 0; i < players.Count; i++)
+        {
+            players[i].Update();
+        }
+
+        LocalControls();
+
+        if (main.winningTeam > -1)
+        {
+            for(int i = 0; i < 20; i++)
+            {
+                if (Random.Range(0, 10) == 0)
+                {
+                    int effect = Random.Range(0, 1);
+
+                    GameObject ps = Instantiate(Resources.Load("SimpleFX/Prefabs/" + victoryEffects[winningTeam][effect])) as GameObject;
+                    ps.transform.position = new Vector3(Random.Range(-100, 100), 5, Random.Range(-250, 250));
+
+                    Destroy(ps, 3);
+                } 
+            }
+        }
+
+    }
+
+    private void LocalControls()
+    {
         if (Input.GetKeyDown(KeyCode.Keypad7))
         {
             SpawnUnit("dude", 0, 0, 8);
