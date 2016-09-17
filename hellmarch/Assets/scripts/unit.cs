@@ -45,6 +45,29 @@ public class unit : MonoBehaviour {
         m_team = team;
     }
 
+    public bool ReceiveDamage(int damage)
+    {
+        m_health -= damage;
+
+        if (m_health <= 0)
+        {
+            m_main.units[m_team].Remove(this.gameObject);
+
+            m_animator.enabled = false;
+            m_collider.enabled = false;
+            m_move = false;
+
+            Invoke("KillMe", 20);
+            return true;
+        }
+        return false;
+    }
+
+    protected void KillMe()
+    {
+        Destroy(this.gameObject);
+    }
+
     // Update is called once per frame
     protected void Update ()
     {
