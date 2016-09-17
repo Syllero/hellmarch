@@ -24,6 +24,25 @@
  					break;
 				case "error":
 					console.log(data.message);
+					break;
+				case "build":
+					var date = new Date();
+					var type = data.type;					
+					var buildTime = data.time;
+					var endTime = date.getTime() + data.time;
+					var progressUpdate = function() {
+						var currentDate = new Date(); 
+						var progress = Math.min(((buildTime - (endTime - currentDate.getTime())) / buildTime) * 100, 100);
+						document.getElementById(type + '-progress').style.width = progress + '%';
+						console.log(document.getElementById(type + '-progress').style.width);
+						if(progress < 100) {
+							window.setTimeout(progressUpdate, 100);
+						} else {
+							document.getElementById(type + '-progress').style.width = '0%';
+						}
+					}
+					window.setTimeout(progressUpdate, 100);
+					break;
 			}
 		};
       
@@ -101,22 +120,34 @@
 						<div class="btn btn-default">
 							<img src="img/soldier_icon.png" class="img-responsive" ontouchstart="window.app.orderTroop('soldier')"></img>
 						</div>
+						<div class="progress">
+							<div id="soldier-progress" class="progress-bar" role="progressbar" style="transition:none;">
+							</div>
+						</div>
 					</div>
 					<div class="col-xs-4">
 						<div class="btn btn-default">
 							<img src="img/bomber_icon.png" class="img-responsive" ontouchstart="window.app.orderTroop('bomber')"></img>
+						</div>
+						<div class="progress">
+							<div id="bomber-progress" class="progress-bar" role="progressbar" style="transition:none;">
+							</div>
 						</div>
 					</div>
 					<div class="col-xs-4">
 						<div class="btn btn-default">
 							<img src="img/blue_icon.png" class="img-responsive" ontouchstart="window.app.orderTroop('pusher')"></img>
 						</div>
+						<div class="progress">
+							<div id="pusher-progress" class="progress-bar" role="progressbar" style="transition:none;">
+							</div>
+						</div>
 					</div>
 				</div>
 				<div id="menu2" class="tab-pane">
 					<div class="col-xs-6">
 						<div class="btn btn-default">
-							<img src="img/blue_icon.png" class="img-responsive" ontouchstart="window.app.sendMessageToScreen('right')" ontouchend="window.app.sendMessageToScreen('stop')"></img>
+							<img src="img/blue_icon.png" class="img-responsive"></img>
 						</div>
 					</div>
 					<div class="col-xs-6">
@@ -136,11 +167,13 @@
 									<div class="row">
 										<div class="col-xs-6">
 											<label for="launch-row">Select Lane:</label>
+										</div>
+										<div class="col-xs-6">
 											<select class="form-control" id="launch-row">
 												<option>A</option>
 												<option>B</option>
 												<option>C</option>
-											</select>
+											</select>	
 										</div>
 									</div>
 									<div class="row">
@@ -181,7 +214,6 @@
 		<div class="row">
 			<div class="col-xs-12">
 				<div id="content"><!--Incoming messages get displayed in this container--></div>
-				<div id="money"></div>
 			</div>
 		</div>
 	</div>

@@ -52,6 +52,7 @@ public class main : MonoBehaviour {
         nuke = Instantiate(Resources.Load("bomb")) as GameObject;
         nuke.transform.position = new Vector3(-52, 0, 0);
 
+        /*
         for (int i = 0; i < 10; i++)
         {
             SpawnUnit("dude", 0, 0, 8);
@@ -65,6 +66,7 @@ public class main : MonoBehaviour {
             SpawnUnit("suicideDude", 1, 1, 0);
             SpawnUnit("pusher", 1, 2, 0);
         }
+        */
     }
 
     List<GameObject> GetTeam(int team)
