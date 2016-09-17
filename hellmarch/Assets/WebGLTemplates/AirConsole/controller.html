@@ -17,6 +17,10 @@
 		var me = this;
 		me.airconsole = new AirConsole({"orientation": "portrait", "synchronize_time" : "true"});
 		me.airconsole.onMessage = function(from, data) {
+			if( data["money"] )
+			{
+				document.getElementById("money").innerHTML = "Money: " + data["money"];
+			}
 			console.log("onMessage", from, data);
 			document.getElementById("content").innerHTML = "device " + from + " says: " + data;
 		};
@@ -111,6 +115,7 @@
 		<div class="row">
 			<div class="col-xs-12">
 				<div id="content"><!--Incoming messages get displayed in this container--></div>
+				<div id="money"></div>
 			</div>
 		</div>
 	</div>
