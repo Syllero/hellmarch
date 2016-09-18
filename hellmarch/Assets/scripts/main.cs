@@ -16,6 +16,9 @@ public class main : MonoBehaviour {
     public Vector3 defaultCamPos;
     public Quaternion defaultCamRot;
 
+    public Texture redDude;
+    public Texture blueDude;
+
 
     public static int width = 50;
     public static int height = 25;
@@ -49,6 +52,8 @@ public class main : MonoBehaviour {
         victoryEffects[1].Add("FX_Fireworks_Yellow_Large");
         victoryEffects[1].Add("FX_Fireworks_Yelow_Small");
 
+        redDude = Resources.Load("dude_red") as Texture;
+        blueDude = Resources.Load("dude_blue") as Texture;
 
         units.Add(0, new List<GameObject>());
         units.Add(1, new List<GameObject>());
@@ -91,6 +96,18 @@ public class main : MonoBehaviour {
 		avatar.GetComponents<AvatarLoading> ()[0].url = "http://i.imgur.com/3swWkvj.jpg";
 		avatar = Instantiate (avatar);
 		avatar.transform.SetParent (go.transform);
+
+        //Renderer renderer = go.GetComponent<Renderer>();
+        var renderers = go.GetComponentsInChildren<Renderer>();
+
+        for (int i = 0; i < renderers.Length; i++)
+        {
+            if (renderers[i].name == "Cube Man")
+            {
+                renderers[i].material.SetTexture("_MainTex", team == 0 ? blueDude : redDude);
+            }
+        }
+                                                     
 
         Vector3 direction = team == 0 ? new Vector3(0, 0, 1) : new Vector3(0, 0, -1);
         go.GetComponent<unit>().Initialize(direction, team, this);
