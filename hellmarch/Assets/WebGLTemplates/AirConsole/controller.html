@@ -27,6 +27,11 @@
 					queueFunction(data.queue.soldier, 'soldier');
 					queueFunction(data.queue.bomber, 'bomber');
 					queueFunction(data.queue.pusher, 'pusher');
+					if(data.team == 0) {
+						document.getElementById('header').style.backgroundColor = "#0037BF;";
+					} else if(data.team == 1) {
+						document.getElementById('header').style.backgroundColor = "#C10026;";
+					}
  					break;
 				case "error":
 					console.log(data.message);
@@ -103,7 +108,7 @@
  
 </head>
 <body onload="window.app = new App()">
-	<div class="jumbotron">
+	<div id="header" class="jumbotron">
 		<div class="container">
 			<img class="img-responsive" src="img/hell_march.png"/>
 		</div>
@@ -155,15 +160,14 @@
 					</div>
 				</div>
 				<div id="menu2" class="tab-pane">
-					<div class="col-xs-6">
-						<div class="btn btn-default">
-							<img src="img/blue_icon.png" class="img-responsive"></img>
-						</div>
+					<div class="col-xs-2">
 					</div>
-					<div class="col-xs-6">
+					<div class="col-xs-8">
 						<div class="btn btn-default" data-toggle="modal" data-target="#launchModal">
 							<img src="img/deploy_icon.png" class="img-responsive"></img>
 						</div>
+					</div>
+					<div class="col-xs-2">
 					</div>
 					<div id="launchModal" class="modal fade" role="dialog">
 						<div class="modal-dialog">
@@ -175,20 +179,36 @@
 								</div>
 								<div class="modal-body container">
 									<div class="row">
-										<div class="col-xs-4">
+										<div class="col-xs-3">
+										</div>
+										<div class="col-xs-6">
 											<div class="btn btn-default" data-dismiss="modal">
 												<img src="img/a_icon.png" class="img-responsive" ontouchstart="window.app.deployTroops(0)"></img>
 											</div>
 										</div>
-										<div class="col-xs-4">
+										<div class="col-xs-3">
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-xs-3">
+										</div>
+										<div class="col-xs-6">
 											<div class="btn btn-default" data-dismiss="modal">
 												<img src="img/b_icon.png" class="img-responsive" ontouchstart="window.app.deployTroops(1)"></img>
 											</div>
 										</div>
-										<div class="col-xs-4">
+										<div class="col-xs-3">
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-xs-3">
+										</div>
+										<div class="col-xs-6">
 											<div class="btn btn-default" data-dismiss="modal">
 												<img src="img/c_icon.png" class="img-responsive" ontouchstart="window.app.deployTroops(2)"></img>
 											</div>
+										</div>
+										<div class="col-xs-3">
 										</div>
 									</div>
 								</div>

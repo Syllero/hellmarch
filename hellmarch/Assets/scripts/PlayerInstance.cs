@@ -50,7 +50,7 @@ namespace AssemblyCSharp
             this.team_id = team_id;
 			this.nickname = AirConsole.instance.GetNickname (this.air_console_id);
 			this.user_profile_url = AirConsole.instance.GetProfilePicture (this.air_console_id);
-		}
+        }
 
 		public void Update()
 		{
@@ -72,6 +72,7 @@ namespace AssemblyCSharp
             JObject root = new JObject();
             JObject queue_info = new JObject();
             root["action"] = "update";
+            root["team"] = this.team_id;
             root["money"] = this.money;
             root["garrison"] = this.garrison_list.Count;
             foreach (KeyValuePair<String, int> queue in this.build_queue)
