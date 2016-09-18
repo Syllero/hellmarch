@@ -12,6 +12,13 @@ public class main : MonoBehaviour {
 
     public Dictionary<int, List<GameObject>> units = new Dictionary<int, List<GameObject>>();
     public GameObject nuke;
+    public GameObject camera;
+    public Vector3 defaultCamPos;
+    public Quaternion defaultCamRot;
+
+    public Texture redDude;
+    public Texture blueDude;
+
 
     public static int width = 50;
     public static int height = 25;
@@ -21,6 +28,8 @@ public class main : MonoBehaviour {
 
     public static int winningTeam = -1;
     bool didReset = false;
+
+    AudioSource ptf;
 
     private Vector3 victoryPosition = Vector3.zero;
 
@@ -45,12 +54,22 @@ public class main : MonoBehaviour {
         victoryEffects[1].Add("FX_Fireworks_Yellow_Large");
         victoryEffects[1].Add("FX_Fireworks_Yelow_Small");
 
+        redDude = Resources.Load("dude_red") as Texture;
+        blueDude = Resources.Load("dude_blue") as Texture;
 
         units.Add(0, new List<GameObject>());
         units.Add(1, new List<GameObject>());
 
         nuke = Instantiate(Resources.Load("bomb")) as GameObject;
         nuke.transform.position = new Vector3(-52, 0, 0);
+
+        camera = GameObject.FindGameObjectWithTag("MainCamera");
+
+        ptf = camera.GetComponents<AudioSource>()[1];
+        ptf.Play();
+
+        defaultCamPos = new Vector3(camera.transform.position.x, camera.transform.position.y, camera.transform.position.z);
+        defaultCamRot = new Quaternion(camera.transform.rotation.x, camera.transform.position.y, camera.transform.position.z, camera.transform.rotation.w);
 
         /*
         for (int i = 0; i < 10; i++)
@@ -89,13 +108,33 @@ public class main : MonoBehaviour {
 			}
 		}*/
 
+        //Renderer renderer = go.GetComponent<Renderer>();
+        var renderers = go.GetComponentsInChildren<Renderer>();
+
+        for (int i = 0; i < renderers.Length; i++)
+        {
+            if (renderers[i].name == "Cube Man")
+            {
+                renderers[i].material.SetTexture("_MainTex", team == 0 ? blueDude : redDude);
+            }
+        }
+                                                     
+
         Vector3 direction = team == 0 ? new Vector3(0, 0, 1) : new Vector3(0, 0, -1);
         go.GetComponent<unit>().Initialize(direction, team, this);
 
         float spawnX = xOffset - row * width;
         float spawnZ = zOffset - column * height;
 
-        go.transform.position = new Vector3(Random.Range(spawnX, spawnX - width), 0, Random.Range(spawnZ, spawnZ - height));
+        if (team == 0)
+        {
+            go.transform.position = new Vector3(Random.Range(spawnX, spawnX - width), 0, Random.Range(-170, -150));
+        }
+        else
+        {
+            go.transform.position = new Vector3(Random.Range(spawnX, spawnX - width), 0, Random.Range(150, 170));
+        }
+
 
         units[team].Add(go);
     }
@@ -133,13 +172,21 @@ public class main : MonoBehaviour {
                     else
                         su.transform.position = nuke.transform.position + new Vector3(Random.Range(-100, 100), 0, -Random.Range(25, 125));
 
+                    if (Random.Range(0, 100) < 10)
+                    {
+                        var explosionSounds = su.GetComponents<AudioSource>();
+                        explosionSounds[Random.Range(0, explosionSounds.Length)].Play();
+                    }
 
                     Destroy(su, 3);
                 } 
             }
 
             if (!didReset)
+            {
+                ptf.Play();
                 Invoke("ResetGame", 10);
+            }
         }
 
     }
@@ -157,11 +204,11 @@ public class main : MonoBehaviour {
         }
 
         
-        Destroy(nuke);
+        Destroy(nuke);  
 
         nuke = Instantiate(Resources.Load("bomb")) as GameObject;
         nuke.transform.position = new Vector3(-52, 0, 0);
-        
+
         winningTeam = -1;
         didReset = false;
 

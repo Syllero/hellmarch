@@ -19,8 +19,19 @@
 		me.airconsole.onMessage = function(from, data) {
 			switch(data.action) {
 				case "update":
+					var queueFunction = function (value, type) {
+						document.getElementById(type + '-label').innerHTML = value;
+					}
 					document.getElementById('garrison').innerHTML = data.garrison;
 					document.getElementById('money').innerHTML = data.money;
+					queueFunction(data.queue.soldier, 'soldier');
+					queueFunction(data.queue.bomber, 'bomber');
+					queueFunction(data.queue.pusher, 'pusher');
+					if(data.team == 0) {
+						document.getElementById('header').style.backgroundColor = "#0037BF;";
+					} else if(data.team == 1) {
+						document.getElementById('header').style.backgroundColor = "#C10026;";
+					}
  					break;
 				case "error":
 					console.log(data.message);
@@ -34,7 +45,6 @@
 						var currentDate = new Date(); 
 						var progress = Math.min(((buildTime - (endTime - currentDate.getTime())) / buildTime) * 100, 100);
 						document.getElementById(type + '-progress').style.width = progress + '%';
-						console.log(document.getElementById(type + '-progress').style.width);
 						if(progress < 100) {
 							window.setTimeout(progressUpdate, 50);
 						} else {
@@ -78,10 +88,10 @@
 		this.airconsole.message(AirConsole.SCREEN, request);
 	};
 	
-	App.prototype.deployTroops = function() {
+	App.prototype.deployTroops = function(index) {
 		var request = {
 			action: "deploy",
-			row:document.getElementById('launch-row').selectedIndex
+			row:index
 		}
 		this.airconsole.message(AirConsole.SCREEN, request);
 	};
@@ -98,7 +108,7 @@
  
 </head>
 <body onload="window.app = new App()">
-	<div class="jumbotron">
+	<div id="header" class="jumbotron">
 		<div class="container">
 			<img class="img-responsive" src="img/hell_march.png"/>
 		</div>
@@ -118,42 +128,46 @@
 				<div id="menu1" class="tab-pane active">
 					<div class="col-xs-4">
 						<div class="btn btn-default">
+							<span id="soldier-label" style="position:absolute;left:15px;top:0px;font-size:1.05em;" class="label label-default">0</span>
 							<img src="img/soldier_icon.png" class="img-responsive" ontouchstart="window.app.orderTroop('soldier')"></img>
 						</div>
 						<div class="progress">
 							<div id="soldier-progress" class="progress-bar" role="progressbar" style="transition:none;">
 							</div>
 						</div>
+						
 					</div>
 					<div class="col-xs-4">
 						<div class="btn btn-default">
+							<span id="bomber-label" style="position:absolute;left:15px;top:0px;font-size:1.05em;" class="label label-default">0</span>
 							<img src="img/bomber_icon.png" class="img-responsive" ontouchstart="window.app.orderTroop('bomber')"></img>
 						</div>
 						<div class="progress">
 							<div id="bomber-progress" class="progress-bar" role="progressbar" style="transition:none;">
 							</div>
 						</div>
+						
 					</div>
 					<div class="col-xs-4">
 						<div class="btn btn-default">
+							<span id="pusher-label" style="position:absolute;left:15px;top:0px;font-size:1.05em;" class="label label-default">0</span>
 							<img src="img/blue_icon.png" class="img-responsive" ontouchstart="window.app.orderTroop('pusher')"></img>
 						</div>
 						<div class="progress">
 							<div id="pusher-progress" class="progress-bar" role="progressbar" style="transition:none;">
 							</div>
-						</div>
+						</div>						
 					</div>
 				</div>
 				<div id="menu2" class="tab-pane">
-					<div class="col-xs-6">
-						<div class="btn btn-default">
-							<img src="img/blue_icon.png" class="img-responsive"></img>
+					<div class="col-xs-2">
+					</div>
+					<div class="col-xs-8">
+						<div class="btn btn-default" data-toggle="modal" data-target="#launchModal">
+							<img src="img/deploy_icon.png" class="img-responsive"></img>
 						</div>
 					</div>
-					<div class="col-xs-6">
-						<div class="btn btn-default" data-toggle="modal" data-target="#launchModal">
-							<img src="img/green_icon.png" class="img-responsive"></img>
-						</div>
+					<div class="col-xs-2">
 					</div>
 					<div id="launchModal" class="modal fade" role="dialog">
 						<div class="modal-dialog">
@@ -165,22 +179,36 @@
 								</div>
 								<div class="modal-body container">
 									<div class="row">
-										<div class="col-xs-6">
-											<label for="launch-row">Select Lane:</label>
+										<div class="col-xs-3">
 										</div>
 										<div class="col-xs-6">
-											<select class="form-control" id="launch-row">
-												<option>A</option>
-												<option>B</option>
-												<option>C</option>
-											</select>	
+											<div class="btn btn-default" data-dismiss="modal">
+												<img src="img/a_icon.png" class="img-responsive" ontouchstart="window.app.deployTroops(0)"></img>
+											</div>
+										</div>
+										<div class="col-xs-3">
 										</div>
 									</div>
 									<div class="row">
-										<div class="col-xs-12">
+										<div class="col-xs-3">
+										</div>
+										<div class="col-xs-6">
 											<div class="btn btn-default" data-dismiss="modal">
-												<img src="img/green_icon.png" class="img-responsive" ontouchstart="window.app.deployTroops()"></img>
+												<img src="img/b_icon.png" class="img-responsive" ontouchstart="window.app.deployTroops(1)"></img>
 											</div>
+										</div>
+										<div class="col-xs-3">
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-xs-3">
+										</div>
+										<div class="col-xs-6">
+											<div class="btn btn-default" data-dismiss="modal">
+												<img src="img/c_icon.png" class="img-responsive" ontouchstart="window.app.deployTroops(2)"></img>
+											</div>
+										</div>
+										<div class="col-xs-3">
 										</div>
 									</div>
 								</div>
