@@ -91,7 +91,12 @@ public class unit : MonoBehaviour {
             m_move = false;
 
 	death_player.transform.SetParent (this.transform);
-	death_player.GetComponent<DeathSoundPlayer>().Play ();
+
+            if(Random.Range(0, 100) < 20)
+            {
+                death_player.GetComponent<DeathSoundPlayer>().Play();
+            }
+
             m_main.units[m_team].Remove(this.gameObject);
 
             Invoke("KillMe", m_killTimer);

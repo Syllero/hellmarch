@@ -154,7 +154,7 @@ public class main : MonoBehaviour {
 
         if (main.winningTeam > -1)
         {
-            for(int i = 0; i < 20; i++)
+            for (int i = 0; i < 5; i++)
             {
                 if (Random.Range(0, 10) == 0)
                 {
@@ -172,7 +172,7 @@ public class main : MonoBehaviour {
                     else
                         su.transform.position = nuke.transform.position + new Vector3(Random.Range(-100, 100), 0, -Random.Range(25, 125));
 
-                    if (Random.Range(0, 100) < 10)
+                    if (Random.Range(0, 100) < 20)
                     {
                         var explosionSounds = su.GetComponents<AudioSource>();
                         explosionSounds[Random.Range(0, explosionSounds.Length)].Play();
@@ -184,7 +184,19 @@ public class main : MonoBehaviour {
 
             if (!didReset)
             {
-                ptf.Play();
+                if (main.winningTeam == 0)
+                {
+                    GameObject winner = GameObject.Instantiate(Resources.Load("blueTeamWins")) as GameObject;
+                    Destroy(winner, 3);
+                }
+                else
+                {
+                    GameObject winner = GameObject.Instantiate(Resources.Load("redTeamWins")) as GameObject;
+                    Destroy(winner, 3);
+                }
+
+                didReset = true; 
+
                 Invoke("ResetGame", 10);
             }
         }
@@ -239,6 +251,8 @@ public class main : MonoBehaviour {
         {
             x.SyncToPlayer();
         });
+
+        ptf.Play();
     }
 
     private void LocalControls()
