@@ -13,9 +13,9 @@ namespace AssemblyCSharp
         static readonly float SYNC_INTERVAL = 0.5f;
 
         static readonly Dictionary<String, UnitInfo> UNIT_INFO = new Dictionary<string, UnitInfo> {
-            { "soldier", new UnitInfo(3.0f, 700, "dude")},
-            { "bomber", new UnitInfo(5.0f, 1200, "suicideDude")},
-            { "pusher", new UnitInfo(1.5f, 250, "pusher")},
+            { "soldier", new UnitInfo(3.0f, 600, "dude")},
+            { "bomber", new UnitInfo(4.5f, 1100, "suicideDude")},
+            { "pusher", new UnitInfo(2.0f, 250, "pusher")},
         };
 
         static readonly Dictionary<int, TeamInfo> TEAM_INFO = new Dictionary<int, TeamInfo> {
@@ -133,7 +133,6 @@ namespace AssemblyCSharp
             foreach (KeyValuePair<String, int> queue in this.build_queue)
             {
                 queue_info[queue.Key] = queue.Value;
-                Debug.Log(queue.Key + ": " + queue.Value);
             }
             root["queue"] = queue_info;
             AirConsole.instance.Message (this.air_console_id, root);
