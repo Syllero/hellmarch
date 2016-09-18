@@ -28,7 +28,7 @@ namespace AssemblyCSharp
         float last_sync = 0;
 		String nickname;
 		public String user_profile_url;
-        int money = 0;
+        int money = 500000;
         Dictionary<String, int> build_queue = new Dictionary<String, int> {
             { "soldier", 0 },
             { "bomber", 0 },
@@ -37,7 +37,7 @@ namespace AssemblyCSharp
         List<KeyValuePair<DateTime, String>> build_list = new List<KeyValuePair<DateTime, String>>();
         List<String> garrison_list = new List<String>();
 
-		int income_per_second = 100;
+		int income_per_second = 120;
 
 		public int AirConsoleId
 		{
@@ -111,8 +111,6 @@ namespace AssemblyCSharp
 		{
 		    float delta = Time.deltaTime;
 		    this.money += (int)(income_per_second * delta);
-
-		    
 
 		    this.FinishBuilds();
 		    this.ProcessQueue();
