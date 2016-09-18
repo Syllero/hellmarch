@@ -83,10 +83,10 @@
 		this.airconsole.message(AirConsole.SCREEN, request);
 	};
 	
-	App.prototype.deployTroops = function() {
+	App.prototype.deployTroops = function(index) {
 		var request = {
 			action: "deploy",
-			row:document.getElementById('launch-row').selectedIndex
+			row:index
 		}
 		this.airconsole.message(AirConsole.SCREEN, request);
 	};
@@ -162,7 +162,7 @@
 					</div>
 					<div class="col-xs-6">
 						<div class="btn btn-default" data-toggle="modal" data-target="#launchModal">
-							<img src="img/green_icon.png" class="img-responsive"></img>
+							<img src="img/deploy_icon.png" class="img-responsive"></img>
 						</div>
 					</div>
 					<div id="launchModal" class="modal fade" role="dialog">
@@ -175,21 +175,19 @@
 								</div>
 								<div class="modal-body container">
 									<div class="row">
-										<div class="col-xs-6">
-											<label for="launch-row">Select Lane:</label>
-										</div>
-										<div class="col-xs-6">
-											<select class="form-control" id="launch-row">
-												<option>A</option>
-												<option>B</option>
-												<option>C</option>
-											</select>	
-										</div>
-									</div>
-									<div class="row">
-										<div class="col-xs-12">
+										<div class="col-xs-4">
 											<div class="btn btn-default" data-dismiss="modal">
-												<img src="img/green_icon.png" class="img-responsive" ontouchstart="window.app.deployTroops()"></img>
+												<img src="img/a_icon.png" class="img-responsive" ontouchstart="window.app.deployTroops(0)"></img>
+											</div>
+										</div>
+										<div class="col-xs-4">
+											<div class="btn btn-default" data-dismiss="modal">
+												<img src="img/b_icon.png" class="img-responsive" ontouchstart="window.app.deployTroops(1)"></img>
+											</div>
+										</div>
+										<div class="col-xs-4">
+											<div class="btn btn-default" data-dismiss="modal">
+												<img src="img/c_icon.png" class="img-responsive" ontouchstart="window.app.deployTroops(2)"></img>
 											</div>
 										</div>
 									</div>
