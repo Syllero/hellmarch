@@ -12,6 +12,10 @@ public class main : MonoBehaviour {
 
     public Dictionary<int, List<GameObject>> units = new Dictionary<int, List<GameObject>>();
     public GameObject nuke;
+    public GameObject camera;
+    public Vector3 defaultCamPos;
+    public Quaternion defaultCamRot;
+
 
     public static int width = 50;
     public static int height = 25;
@@ -52,6 +56,11 @@ public class main : MonoBehaviour {
         nuke = Instantiate(Resources.Load("bomb")) as GameObject;
         nuke.transform.position = new Vector3(-52, 0, 0);
 
+        camera = GameObject.FindGameObjectWithTag("MainCamera");
+
+        defaultCamPos = new Vector3(camera.transform.position.x, camera.transform.position.y, camera.transform.position.z);
+        defaultCamRot = new Quaternion(camera.transform.rotation.x, camera.transform.position.y, camera.transform.position.z, camera.transform.rotation.w);
+
         /*
         for (int i = 0; i < 10; i++)
         {
@@ -89,7 +98,15 @@ public class main : MonoBehaviour {
         float spawnX = xOffset - row * width;
         float spawnZ = zOffset - column * height;
 
-        go.transform.position = new Vector3(Random.Range(spawnX, spawnX - width), 0, Random.Range(spawnZ, spawnZ - height));
+        if (team == 0)
+        {
+            go.transform.position = new Vector3(Random.Range(spawnX, spawnX - width), 0, Random.Range(-170, -150));
+        }
+        else
+        {
+            go.transform.position = new Vector3(Random.Range(spawnX, spawnX - width), 0, Random.Range(150, 170));
+        }
+
 
         units[team].Add(go);
     }
@@ -155,7 +172,7 @@ public class main : MonoBehaviour {
 
         nuke = Instantiate(Resources.Load("bomb")) as GameObject;
         nuke.transform.position = new Vector3(-52, 0, 0);
-        
+
         winningTeam = -1;
         didReset = false;
 

@@ -109,7 +109,11 @@ public class unit : MonoBehaviour {
     // Update is called once per frame
     protected void Update ()
     {   
-        if (transform.position.z > main.zOffset || transform.position.z < -main.zOffset - 10)
+        if (transform.position.z > main.zOffset && m_direction.z > 0)
+        {
+            ReceiveDamage(1);
+        }
+        else if(transform.position.z < -main.zOffset - 10 && m_direction.z < 0)
         {
             ReceiveDamage(1);
         }
