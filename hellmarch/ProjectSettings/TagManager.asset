@@ -7,6 +7,8 @@ TagManager:
   - bomb
   - nuke
   - main
+  - AvatarPosLeft
+  - AvatarPosRight
   layers:
   - Default
   - TransparentFX

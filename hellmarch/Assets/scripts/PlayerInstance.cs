@@ -27,7 +27,7 @@ namespace AssemblyCSharp
         int team_id;
         float last_sync = 0;
 		String nickname;
-		String user_profile_url;
+		public String user_profile_url;
         int money = 0;
         Dictionary<String, int> build_queue = new Dictionary<String, int>();
         List<KeyValuePair<DateTime, String>> build_list = new List<KeyValuePair<DateTime, String>>();
@@ -40,12 +40,67 @@ namespace AssemblyCSharp
 			get { return air_console_id; }
 		}
 
+		static int right_count = 0;
+		static int left_count = 0;
+
+		static GameObject leftavatar;
+		static GameObject rightavatar;
+
+		static List<Vector3> old_left_positions = new List<Vector3> ();
+		static List<Vector3> old_right_positions = new List<Vector3> ();
+
+		static Dictionary<int,GameObject> avatars = new Dictionary<int,GameObject>(); 
+
 		public PlayerInstance ( int air_console_id, int team_id )
 		{
 			this.air_console_id = air_console_id;
             this.team_id = team_id;
 			this.nickname = AirConsole.instance.GetNickname (this.air_console_id);
 			this.user_profile_url = AirConsole.instance.GetProfilePicture (this.air_console_id);
+
+			if (!leftavatar) {
+				leftavatar = GameObject.FindGameObjectWithTag ("AvatarPosLeft");
+			}
+			if (!rightavatar) {
+				rightavatar = GameObject.FindGameObjectWithTag ("AvatarPosRight");
+			}
+
+			if (!avatars.ContainsKey (air_console_id)) {
+				GameObject avatar = Resources.Load<GameObject> ("Avatar");
+				avatar.GetComponents<AvatarLoading> () [0].url = user_profile_url;
+				avatar = GameObject.Instantiate (avatar);
+
+				if (team_id == 0) {
+					if (old_right_positions.Count > 0) {
+						avatar.transform.position = old_right_positions [old_right_positions.Count - 1];
+						old_right_positions.RemoveAt (old_right_positions.Count - 1);
+					} else {
+						avatar.transform.position = rightavatar.transform.position + new Vector3 (-15 * right_count++, 0, 0);
+					}
+				} else {
+					if (old_left_positions.Count > 0) {
+						avatar.transform.position = old_left_positions [old_left_positions.Count - 1];
+						old_left_positions.RemoveAt (old_left_positions.Count - 1);
+					} else {
+						avatar.transform.position = leftavatar.transform.position + new Vector3 (-15 * left_count++, 0, 0);
+					}
+				}
+					
+				avatars.Add (air_console_id, avatar);
+			}
+			//avatar.transform.SetParent (go.transform);
+		}
+	
+		public void Destroy()
+		{
+			if (team_id == 0) {
+				old_right_positions.Add (avatars [air_console_id].transform.position);
+			} else {
+				old_left_positions.Add (avatars [air_console_id].transform.position);
+			}
+					
+			GameObject.Destroy(avatars[air_console_id]);
+			avatars.Remove (air_console_id);
 		}
 
 		public void Update()
@@ -160,7 +215,13 @@ namespace AssemblyCSharp
                     foreach (String type in this.garrison_list)
                     {
                         Debug.Log("Building: " + type);
-                        main_object.SpawnUnit(UNIT_INFO[type].build_name, this.team_id, row, column);
+						bool first = true;
+						if (first) {
+							main_object.SpawnUnit (UNIT_INFO [type].build_name, this.team_id, row, column, this.air_console_id);
+							first = false;
+						} else {
+							main_object.SpawnUnit (UNIT_INFO [type].build_name, this.team_id, row, column);
+						}
                     }
                     this.garrison_list.Clear();
                 }

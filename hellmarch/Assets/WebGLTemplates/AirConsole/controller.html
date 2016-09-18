@@ -36,12 +36,12 @@
 						document.getElementById(type + '-progress').style.width = progress + '%';
 						console.log(document.getElementById(type + '-progress').style.width);
 						if(progress < 100) {
-							window.setTimeout(progressUpdate, 100);
+							window.setTimeout(progressUpdate, 50);
 						} else {
 							document.getElementById(type + '-progress').style.width = '0%';
 						}
 					}
-					window.setTimeout(progressUpdate, 100);
+					window.setTimeout(progressUpdate, 50);
 					break;
 			}
 		};
