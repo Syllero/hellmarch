@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Newtonsoft.Json.Linq;
 using AssemblyCSharp;
+using UnityEngine.UI;
 
 public class main : MonoBehaviour {
 
@@ -35,8 +36,11 @@ public class main : MonoBehaviour {
 
     private Dictionary<int, List<string>> victoryEffects = new Dictionary<int, List<string>>();
 
+	public Text countdowner;
+	private float countdown = 30;
     // Use this for initialization
     void Start () {
+		
 		players = new List<PlayerInstance> (); 
 
         AirConsole.instance.onMessage += OnMessage;
@@ -95,8 +99,9 @@ public class main : MonoBehaviour {
 
 	public void SpawnUnit(string type, int team, int row, int column, int fagget = -1)
     {
-        GameObject go = Instantiate(Resources.Load(type)) as GameObject;
-		/*
+		if (countdown <= 0) {
+			GameObject go = Instantiate (Resources.Load (type)) as GameObject;
+			/*
 		if (fagget != -1) {
 			for (int i = 0; i < players.Count; i++) {
 				if (players [i].AirConsoleId == fagget) {
@@ -108,45 +113,51 @@ public class main : MonoBehaviour {
 			}
 		}*/
 
-        //Renderer renderer = go.GetComponent<Renderer>();
-        var renderers = go.GetComponentsInChildren<Renderer>();
+			//Renderer renderer = go.GetComponent<Renderer>();
+			var renderers = go.GetComponentsInChildren<Renderer> ();
 
-        for (int i = 0; i < renderers.Length; i++)
-        {
-            if (renderers[i].name == "Cube Man")
-            {
-                renderers[i].material.SetTexture("_MainTex", team == 0 ? blueDude : redDude);
-            }
-        }
+			for (int i = 0; i < renderers.Length; i++) {
+				if (renderers [i].name == "Cube Man") {
+					renderers [i].material.SetTexture ("_MainTex", team == 0 ? blueDude : redDude);
+				}
+			}
                                                      
 
-        Vector3 direction = team == 0 ? new Vector3(0, 0, 1) : new Vector3(0, 0, -1);
-        go.GetComponent<unit>().Initialize(direction, team, this);
+			Vector3 direction = team == 0 ? new Vector3 (0, 0, 1) : new Vector3 (0, 0, -1);
+			go.GetComponent<unit> ().Initialize (direction, team, this);
 
-        float spawnX = xOffset - row * width;
-        float spawnZ = zOffset - column * height;
+			float spawnX = xOffset - row * width;
+			float spawnZ = zOffset - column * height;
 
-        if (team == 0)
-        {
-            go.transform.position = new Vector3(Random.Range(spawnX, spawnX - width), 0, Random.Range(-170, -150));
-        }
-        else
-        {
-            go.transform.position = new Vector3(Random.Range(spawnX, spawnX - width), 0, Random.Range(150, 170));
-        }
+			if (team == 0) {
+				go.transform.position = new Vector3 (Random.Range (spawnX, spawnX - width), 0, Random.Range (-170, -150));
+			} else {
+				go.transform.position = new Vector3 (Random.Range (spawnX, spawnX - width), 0, Random.Range (150, 170));
+			}
 
 
-        units[team].Add(go);
+			units [team].Add (go);
+		}
     }
 	
 	// Update is called once per frame
 	void Update ()
     {
+		if (countdown >= 0) {
+			countdown -= Time.deltaTime;
+			countdowner.text = ""+(int)countdown;
+		} else {
+			countdowner.text = "";
+		}
+
         if (winningTeam == -1)
         {
             for (int i = 0; i < players.Count; i++)
             {
-                players[i].Update();
+				if (countdown <= 0) {
+					players [i].Update ();
+				}
+					players [i].SyncToPlayer ();
             }
         }
 
@@ -180,6 +191,7 @@ public class main : MonoBehaviour {
 
                     Destroy(su, 3);
                 } 
+				countdown = 30;
             }
 
             if (!didReset)

@@ -112,30 +112,29 @@ namespace AssemblyCSharp
 		    float delta = Time.deltaTime;
 		    this.money += (int)(income_per_second * delta);
 
-		    float currentTime = Time.realtimeSinceStartup;
-		    if(currentTime - this.last_sync >= SYNC_INTERVAL)
-		    {
-			    this.SyncToPlayer();
-			    this.last_sync = currentTime;
-		    }
+		    
+
 		    this.FinishBuilds();
 		    this.ProcessQueue();
 		}
 
         public void SyncToPlayer()
         {
-            JObject root = new JObject();
-            JObject queue_info = new JObject();
-            root["action"] = "update";
-            root["team"] = this.team_id;
-            root["money"] = this.money;
-            root["garrison"] = this.garrison_list.Count;
-            foreach (KeyValuePair<String, int> queue in this.build_queue)
-            {
-                queue_info[queue.Key] = queue.Value;
-            }
-            root["queue"] = queue_info;
-            AirConsole.instance.Message (this.air_console_id, root);
+			float currentTime = Time.realtimeSinceStartup;
+			if (currentTime - this.last_sync >= SYNC_INTERVAL) {
+				this.last_sync = currentTime;
+				JObject root = new JObject ();
+				JObject queue_info = new JObject ();
+				root ["action"] = "update";
+				root ["team"] = this.team_id;
+				root ["money"] = this.money;
+				root ["garrison"] = this.garrison_list.Count;
+				foreach (KeyValuePair<String, int> queue in this.build_queue) {
+					queue_info [queue.Key] = queue.Value;
+				}
+				root ["queue"] = queue_info;
+				AirConsole.instance.Message (this.air_console_id, root);
+			}
 		}
 
         public void FinishBuilds()

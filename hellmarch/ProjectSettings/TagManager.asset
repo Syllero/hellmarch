@@ -9,6 +9,7 @@ TagManager:
   - main
   - AvatarPosLeft
   - AvatarPosRight
+  - Countdown
   layers:
   - Default
   - TransparentFX
