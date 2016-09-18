@@ -6,7 +6,7 @@ public class shooterUnit : unit {
 
     // Use this for initialization
 
-    int m_targetRange = 80;
+    int m_targetRange = 70;
     int m_shootRange = 60;
 
     int m_shotInterval = 2;

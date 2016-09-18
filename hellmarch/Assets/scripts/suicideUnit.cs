@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 public class suicideUnit : unit {
 
-    int m_targetRange = 30;
+    int m_targetRange = 70;
     int m_fireRange = 10;
     int m_explosionRange = 20;
     int m_damage = 10;
