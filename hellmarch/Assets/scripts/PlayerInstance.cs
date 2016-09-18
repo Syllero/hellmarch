@@ -29,7 +29,11 @@ namespace AssemblyCSharp
 		String nickname;
 		String user_profile_url;
         int money = 0;
-        Dictionary<String, int> build_queue = new Dictionary<String, int>();
+        Dictionary<String, int> build_queue = new Dictionary<String, int> {
+            { "soldier", 0 },
+            { "bomber", 0 },
+            { "pusher", 0 },
+        };
         List<KeyValuePair<DateTime, String>> build_list = new List<KeyValuePair<DateTime, String>>();
         List<String> garrison_list = new List<String>();
 
@@ -56,8 +60,8 @@ namespace AssemblyCSharp
 		    float currentTime = Time.realtimeSinceStartup;
 		    if(currentTime - this.last_sync >= SYNC_INTERVAL)
 		    {
-			this.SyncToPlayer();
-			this.last_sync = currentTime;
+			    this.SyncToPlayer();
+			    this.last_sync = currentTime;
 		    }
 		    this.FinishBuilds();
 		    this.ProcessQueue();
@@ -72,10 +76,8 @@ namespace AssemblyCSharp
             root["garrison"] = this.garrison_list.Count;
             foreach (KeyValuePair<String, int> queue in this.build_queue)
             {
-                if(queue.Value > 0)
-                {
-                    queue_info[queue.Key] = queue.Value;
-                }
+                queue_info[queue.Key] = queue.Value;
+                Debug.Log(queue.Key + ": " + queue.Value);
             }
             root["queue"] = queue_info;
             AirConsole.instance.Message (this.air_console_id, root);
@@ -159,7 +161,6 @@ namespace AssemblyCSharp
                     int row = (int)data["row"];
                     foreach (String type in this.garrison_list)
                     {
-                        Debug.Log("Building: " + type);
                         main_object.SpawnUnit(UNIT_INFO[type].build_name, this.team_id, row, column);
                     }
                     this.garrison_list.Clear();
