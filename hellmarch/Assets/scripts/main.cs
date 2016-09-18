@@ -29,6 +29,8 @@ public class main : MonoBehaviour {
     public static int winningTeam = -1;
     bool didReset = false;
 
+    AudioSource ptf;
+
     private Vector3 victoryPosition = Vector3.zero;
 
     private Dictionary<int, List<string>> victoryEffects = new Dictionary<int, List<string>>();
@@ -62,6 +64,9 @@ public class main : MonoBehaviour {
         nuke.transform.position = new Vector3(-52, 0, 0);
 
         camera = GameObject.FindGameObjectWithTag("MainCamera");
+
+        ptf = camera.GetComponents<AudioSource>()[1];
+        ptf.Play();
 
         defaultCamPos = new Vector3(camera.transform.position.x, camera.transform.position.y, camera.transform.position.z);
         defaultCamRot = new Quaternion(camera.transform.rotation.x, camera.transform.position.y, camera.transform.position.z, camera.transform.rotation.w);
@@ -161,13 +166,21 @@ public class main : MonoBehaviour {
                     else
                         su.transform.position = nuke.transform.position + new Vector3(Random.Range(-100, 100), 0, -Random.Range(25, 125));
 
+                    if (Random.Range(0, 100) < 10)
+                    {
+                        var explosionSounds = su.GetComponents<AudioSource>();
+                        explosionSounds[Random.Range(0, explosionSounds.Length)].Play();
+                    }
 
                     Destroy(su, 3);
                 } 
             }
 
             if (!didReset)
+            {
+                ptf.Play();
                 Invoke("ResetGame", 10);
+            }
         }
 
     }
@@ -185,7 +198,7 @@ public class main : MonoBehaviour {
         }
 
         
-        Destroy(nuke);
+        Destroy(nuke);  
 
         nuke = Instantiate(Resources.Load("bomb")) as GameObject;
         nuke.transform.position = new Vector3(-52, 0, 0);
