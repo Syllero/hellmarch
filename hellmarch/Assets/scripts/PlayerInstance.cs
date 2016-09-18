@@ -10,7 +10,7 @@ namespace AssemblyCSharp
 {
 	public class PlayerInstance
 	{
-        static readonly float SYNC_INTERVAL = 0.5f;
+        static readonly float SYNC_INTERVAL = 1.0f;
 
         static readonly Dictionary<String, UnitInfo> UNIT_INFO = new Dictionary<string, UnitInfo> {
             { "soldier", new UnitInfo(3.0f, 600, "dude")},
@@ -28,7 +28,7 @@ namespace AssemblyCSharp
         float last_sync = 0;
 		String nickname;
 		public String user_profile_url;
-        int money = 500000;
+        int money = 1000;
         Dictionary<String, int> build_queue = new Dictionary<String, int> {
             { "soldier", 0 },
             { "bomber", 0 },
