@@ -37,7 +37,7 @@ public class CameraController : MonoBehaviour {
 		}
 		else if (main_object.nuke != null)
 		{
-			transform.position = new Vector3(transform.position.x, transform.position.y, Mathf.Clamp(main_object.nuke.transform.position.z * 2, -250, 250)) + new Vector3(Mathf.Cos(t), 0, Mathf.Sin(t)) * 75;
+			transform.position = new Vector3(transform.position.x, transform.position.y, Mathf.Clamp(main_object.nuke.transform.position.z * 2, -250, 250)) + new Vector3(0, 0, Mathf.Sin(t) * 75);
 			transform.LookAt(main_object.nuke.transform.position);
 
 			float dist = Mathf.Abs(transform.position.z);
