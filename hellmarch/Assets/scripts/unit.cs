@@ -37,6 +37,7 @@ public class unit : MonoBehaviour {
         m_movementSpeed = 20;
         m_killTimer = 3;
         m_move = true;
+		ToggleColliders(false);
 	}
 
     public void Initialize(Vector3 startDirection, int team, main main)
@@ -90,18 +91,19 @@ public class unit : MonoBehaviour {
 
 
         if (m_health <= 0)
-        { 
-            if (m_animator)
+		{
+			ToggleColliders(true);
+
+			if (m_animator)
                 m_animator.enabled = false;
 
             if (m_collider)
                 m_collider.enabled = false;
 
-            m_move = false;
+			m_move = false;
 
-	death_player.transform.SetParent (this.transform);
-
-            if(Random.Range(0, 100) < 20)
+			death_player.transform.SetParent(this.transform);
+			if (Random.Range(0, 100) < 20)
             {
                 death_player.GetComponent<DeathSoundPlayer>().Play();
             }
@@ -120,8 +122,8 @@ public class unit : MonoBehaviour {
         Destroy(this.gameObject);
     }
 
-    // Update is called once per frame
-    protected void Update ()
+	// Update is called once per frame
+	protected void Update ()
 	{
 		if (transform.position.z > main.zOffset && m_direction.z > 0)
         {
@@ -132,4 +134,18 @@ public class unit : MonoBehaviour {
             ReceiveDamage(1, true);
         }
     }
+
+	protected void ToggleColliders(bool active)
+	{
+		foreach(Collider c in GetComponentsInChildren<Collider>())
+		{
+			c.enabled = active;
+
+		}
+		foreach (Rigidbody r in GetComponentsInChildren<Rigidbody>())
+		{
+			r.useGravity = active;
+
+		}
+	}
 }

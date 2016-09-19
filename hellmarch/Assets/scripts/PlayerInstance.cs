@@ -28,7 +28,7 @@ namespace AssemblyCSharp
         float last_sync = 0;
 		String nickname;
 		public String user_profile_url;
-        int money = 500000;
+        int money = 1000;
         Dictionary<String, int> build_queue = new Dictionary<String, int> {
             { "soldier", 0 },
             { "bomber", 0 },

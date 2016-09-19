@@ -19,20 +19,22 @@ public class pusherUnit : unit {
 	new void Update () {
         base.Update();
 
-        if (m_move)
+        if (m_move && !pushing)
         {
             float dist = Vector3.Distance(m_main.nuke.transform.position, transform.position);
 
             if (dist <= pushRange)
             {
                 transform.parent = m_main.nuke.transform;
+				Debug.Log("Setting parent");
 
                 if (!pushing)
                 {
                     m_main.nuke.GetComponent<nuke>().AddPusher(m_team);
                     pushing = true;
                     m_animator.SetBool("push", true);
-                }
+
+				}
             }
             else
             {

@@ -37,9 +37,13 @@ public class main : MonoBehaviour {
     private Dictionary<int, List<string>> victoryEffects = new Dictionary<int, List<string>>();
 
 	public Text countdowner;
+#if UNITY_EDITOR
+	private float countdown = 0;
+#else
 	private float countdown = 30;
-    // Use this for initialization
-    void Start () {
+#endif
+	// Use this for initialization
+	void Start () {
 		
 		players = new List<PlayerInstance> (); 
 
