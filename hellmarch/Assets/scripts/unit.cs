@@ -21,8 +21,8 @@ public class unit : MonoBehaviour {
     protected bool m_move;
 
     protected int m_killTimer;
-
-    public int GetTeam() { return m_team; }
+	
+	public int GetTeam() { return m_team; }
 
 	GameObject death_player;
 
@@ -37,7 +37,7 @@ public class unit : MonoBehaviour {
         m_movementSpeed = 20;
         m_killTimer = 3;
         m_move = true;
-    }
+	}
 
     public void Initialize(Vector3 startDirection, int team, main main)
     {
@@ -70,15 +70,24 @@ public class unit : MonoBehaviour {
         return false;
     }
 
-    public virtual bool ReceiveDamage(int damage)
-    {
-        m_health -= damage;
+	public virtual bool ReceiveDamage(int damage, bool deadly = false)
+	{
+		if (deadly)
+		{
+			m_health = 0;
+		}
+		else
+		{
+			m_health -= damage;
+		}
 
-        GameObject su = Instantiate(Resources.Load("SimpleFX/Prefabs/FX_BloodSplatter")) as GameObject;
-        su.transform.position = transform.position + new Vector3(0, 2, 0);
-        su.transform.RotateAround(Vector3.up, Random.Range(0, 359));
+		if (m_move) {
+			GameObject su = Instantiate(Resources.Load("SimpleFX/Prefabs/FX_BloodSplatter")) as GameObject;
+			su.transform.position = transform.position + new Vector3(0, 2, 0);
+			su.transform.RotateAround(Vector3.up, Random.Range(0, 359));
+			Destroy(su, 10);
+		}
 
-        Destroy(su, 10); 
 
         if (m_health <= 0)
         { 
@@ -113,14 +122,14 @@ public class unit : MonoBehaviour {
 
     // Update is called once per frame
     protected void Update ()
-    {   
-        if (transform.position.z > main.zOffset && m_direction.z > 0)
+	{
+		if (transform.position.z > main.zOffset && m_direction.z > 0)
         {
-            ReceiveDamage(1);
+            ReceiveDamage(1, true);
         }
         else if(transform.position.z < -main.zOffset - 10 && m_direction.z < 0)
         {
-            ReceiveDamage(1);
+            ReceiveDamage(1, true);
         }
     }
 }

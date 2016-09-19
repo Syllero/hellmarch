@@ -54,7 +54,7 @@ public class pusherUnit : unit {
         return false;
     }
 
-    public override bool ReceiveDamage(int damage)
+    public override bool ReceiveDamage(int damage, bool deadly = false)
     {
         if(base.ReceiveDamage(damage))
         {
