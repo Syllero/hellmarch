@@ -14,7 +14,7 @@ public class CameraController : MonoBehaviour {
 	}
 	
 	// Update is called once per frame
-	void Update () {
+	void LateUpdate () {
 
 		float t = 0.15f * Mathf.PI * Mathf.Sin(Time.time * 0.1f) + Mathf.PI;
 		gameObject.GetComponent<Camera>().fieldOfView = 60;
